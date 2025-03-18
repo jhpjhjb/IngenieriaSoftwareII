@@ -30,8 +30,8 @@ public class ControladorProductos {
         return producto_Alimenticio.buscarPorId(id);
     }
 
-    public String ingresarProductoAlimenticio(ProductoAlimenticio productoAlimenticio){
-        return producto_Alimenticio.ingresarObjeto(productoAlimenticio);
+    public String ingresarProductoAlimenticio(Producto alimento2){
+        return producto_Alimenticio.ingresarObjeto(alimento2);
     }
 
     public String actualizarProductoAlimenticio(ProductoAlimenticio producto_actualizado){
@@ -52,8 +52,8 @@ public class ControladorProductos {
         return producto_Electrico.buscarPorId(id);
     }
 
-    public String ingresarProductoElectrico(ProductoElectrico productoElectrico){
-        return producto_Electrico.ingresarObjeto(productoElectrico);
+    public String ingresarProductoElectrico(Producto electrico2){
+        return producto_Electrico.ingresarObjeto(electrico2);
     }
 
     public String actualizarProductoElectrico(ProductoElectrico producto_actualizado){
