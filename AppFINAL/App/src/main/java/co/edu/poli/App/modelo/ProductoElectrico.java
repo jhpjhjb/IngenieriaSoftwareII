@@ -2,11 +2,9 @@ package co.edu.poli.App.modelo;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import co.edu.poli.App.controlador.ControladorProductos;
 
 public class ProductoElectrico extends Producto {
     private String voltajeEntrada;
-    private ControladorProductos controladorProductos;
     
 
     public String getVoltaje() {
@@ -31,10 +29,6 @@ public class ProductoElectrico extends Producto {
         super(id, "ELECTRICO");
     }
 
-    public ProductoElectrico() throws ClassNotFoundException, SQLException {
-        super("ELECTRICO");
-        this.controladorProductos = new ControladorProductos();
-    }
 
     @Override
     public String toString() {
@@ -49,17 +43,6 @@ public class ProductoElectrico extends Producto {
 
     @Override
     public Producto clonar() {
-    try {
-        ControladorProductos controladorProductos = new ControladorProductos();
-        ProductoElectrico productoElectrico = new ProductoElectrico(0, getDescripcion(), getVoltaje());
-
-        String mensaje = controladorProductos.ingresarProductoElectrico(productoElectrico);
-        System.out.println(mensaje);
-
-        return productoElectrico;
-    } catch (Exception e) {
-        e.printStackTrace();
-        return null;
-    }
+        return new ProductoElectrico(this.getId(), this.getDescripcion(), this.getVoltaje());
     }
 }
