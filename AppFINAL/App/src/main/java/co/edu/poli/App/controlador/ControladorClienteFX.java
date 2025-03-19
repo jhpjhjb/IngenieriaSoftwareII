@@ -30,7 +30,6 @@ import javafx.scene.input.KeyEvent;
 public class ControladorClienteFX {
 
     private Boolean mostrar = false;
-    private String metodoPago;
     private DaoCliente controladorCliente;
     private Button ultimoBotonPresionado;
     private DaoProductoAlimenticio controladorProductoAlimento;
@@ -148,6 +147,14 @@ public class ControladorClienteFX {
 
     }
 
+    private void mostrarAlerta(String titulo, String header, String contenido) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(header);
+        alert.setContentText(contenido);
+        alert.show();
+    }
+
     @FXML
     void clickOk(ActionEvent event) {
         int id = 0;
@@ -157,56 +164,36 @@ public class ControladorClienteFX {
         }
         Cliente cliente = null;
         String nombres = nombre.getText();
-        Alert alert = new Alert(AlertType.INFORMATION);
 
         if(ultimoBotonPresionado == consultid){
             cliente= controladorCliente.buscarPorId(id);
-            alert.setHeaderText("Informacion Sobre:  " + cliente.getNombre() + " :)");
-            alert.setContentText(cliente.toString());
-            alert.setTitle("Cliente: " + cliente.getNombre());
-            alert.show();
+            mostrarAlerta("Cliente" + cliente.getNombre(), "Informacion Sobre: " + cliente.getNombre() + " :)", cliente.toString());
         }
         else if(ultimoBotonPresionado == delete){
             cliente = controladorCliente.eliminarObjeto(id);
-            alert.setContentText(cliente.toString());
-            alert.setHeaderText("Cliente Eliminado Exitosamente: " + cliente.getNombre() + " :(");
-            alert.setTitle("Cliente Eliminado: " + cliente.getNombre());
-            alert.show();
+            mostrarAlerta("Cliente Eliminado: " + cliente.getNombre(), "Cliente Eliminado Exitosamente: " + cliente.getNombre() + " :(", cliente.toString());
         }
         else if(ultimoBotonPresionado == insert){
             cliente = new Cliente(nombres);
-            alert.setContentText(controladorCliente.ingresarObjeto(cliente) + ": " +cliente.getNombre());
-            alert.setHeaderText("Cliente Insertado Exitosamente: " + cliente.getNombre());
-            alert.setTitle("Cliente Ingresado: " + cliente.getNombre());
-            alert.show();
+            mostrarAlerta("Cliente Ingresado: " + cliente.getNombre(), "Cliente Insertado Exitosamente: " + cliente.getNombre(), controladorCliente.ingresarObjeto(cliente) + ": " + cliente.getNombre());
         }
         else if (ultimoBotonPresionado == update){
             cliente = new Cliente(id,nombres);
-            alert.setHeaderText("Cliente Actualizado Exitosamente: " + cliente.getNombre());
-            alert.setContentText(controladorCliente.actualizarObjeto(cliente) + ": " +cliente.getNombre());
-            alert.setTitle("Cliente Actualizado: " + cliente.getNombre());
-            alert.show();
+            mostrarAlerta("Cliente Actualizado: " + cliente.getNombre(), "Cliente Actualizado Exitosamente: " + cliente.getNombre(), controladorCliente.actualizarObjeto(cliente) + ": " + cliente.getNombre());
         }
         else if (ultimoBotonPresionado == clonar){
             if(nombre.getText().equalsIgnoreCase("electrico")){
                 Producto electrico = controlaProductoElectrico.buscarPorId(id);
                 Producto electrico2 = electrico.clonar();
-                alert.setHeaderText("Producto Electrico Clonado Exitosamente: " + electrico2.getDescripcion());
                 controlaProductoElectrico.ingresarObjeto(electrico2);
-                alert.setContentText(electrico2.toString());
-                alert.setTitle("Producto Electrico" + electrico2.getDescripcion());
-                alert.show();
+                mostrarAlerta("Producto Electrico" + electrico2.getDescripcion(), "Producto Electrico Clonado Exitosamente: " + electrico2.getDescripcion(), electrico2.toString());
             }
             else if(nombre.getText().equalsIgnoreCase("alimento")){
                 Producto alimento = controladorProductoAlimento.buscarPorId(id);
                 Producto alimento2 = alimento.clonar();
-                alert.setHeaderText("Producto Alimento Clonado Exitosamente: " + alimento2.getDescripcion());
                 controladorProductoAlimento.ingresarObjeto(alimento2);
-                alert.setContentText (alimento2.toString());
-                alert.setTitle("Producto Alimento " + alimento2.getDescripcion());
-                alert.show();
+                mostrarAlerta("Producto Alimento " + alimento2.getDescripcion(), "Producto Alimento Clonado Exitosamente: " + alimento2.getDescripcion(), alimento2.toString());
             }
-
         }
     }
     @FXML
@@ -241,7 +228,6 @@ public class ControladorClienteFX {
 
     @FXML
     void NequiClick(ActionEvent event) {
-        metodoPago = "Nequi";
         double monto = Double.parseDouble(montoPagar.getText());
         String mensaje = ProcesarPago.procesarPago("Nequi", monto);
         montoPagar.clear();
@@ -250,9 +236,8 @@ public class ControladorClienteFX {
 
     @FXML
     void PaypalClick(ActionEvent event) {
-        metodoPago = "Paypal";
         double monto = Double.parseDouble(montoPagar.getText());
-        String mensaje =ProcesarPago.procesarPago("Paypal", monto);
+        String mensaje = ProcesarPago.procesarPago("Paypal", monto);
         montoPagar.clear();
         JOptionPane.showMessageDialog(null, mensaje);
     }

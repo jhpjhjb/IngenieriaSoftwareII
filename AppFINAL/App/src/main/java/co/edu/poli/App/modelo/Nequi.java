@@ -8,6 +8,6 @@ public class Nequi {
         this.nombre = nombre;
     }
     public String transferir(double monto){
-        return "Transferencia exitosa de " + nombre + "\nCon Numero de Telefono: " + numero + "\nMonto: " + monto;
+        return "Transferencia exitosa de " + nombre + "\nCon Numero de Telefono: " + numero + "\nMonto: $" + monto;
     }
 }
