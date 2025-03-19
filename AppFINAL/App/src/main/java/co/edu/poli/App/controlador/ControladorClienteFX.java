@@ -1,9 +1,18 @@
 package co.edu.poli.App.controlador;
 
+import java.lang.ProcessHandle.Info;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import co.edu.poli.App.modelo.Cliente;
+import co.edu.poli.App.modelo.IPagoExterno;
+import co.edu.poli.App.modelo.Nequi;
+import co.edu.poli.App.modelo.NequiAdapter;
+import co.edu.poli.App.modelo.Paypal;
+import co.edu.poli.App.modelo.PaypalAdapter;
+import co.edu.poli.App.modelo.ProcesarPago;
 import co.edu.poli.App.modelo.Producto;
 import co.edu.poli.App.modelo.ProductoElectrico;
 import co.edu.poli.App.servicio.DaoCliente;
@@ -20,7 +29,8 @@ import javafx.scene.input.KeyEvent;
 
 public class ControladorClienteFX {
 
-
+    private Boolean mostrar = false;
+    private String metodoPago;
     private DaoCliente controladorCliente;
     private Button ultimoBotonPresionado;
     private DaoProductoAlimenticio controladorProductoAlimento;
@@ -32,12 +42,26 @@ public class ControladorClienteFX {
         this.controladorCliente = new DaoCliente();
         this.controlaProductoElectrico = new DaoProductoElectrico();
     }
-    
+    @FXML
+    private Button adapter;
+
+    @FXML
+    private Button bttBuild;
+
+    @FXML
+    private Button bttNequi;
+
     @FXML
     private Button bttOk;
 
     @FXML
+    private Button bttPaypal;
+
+    @FXML
     private Button clonar;
+
+    @FXML
+    private Button composite;
 
     @FXML
     private Button consult;
@@ -55,10 +79,14 @@ public class ControladorClienteFX {
     private Button insert;
 
     @FXML
+    private TextField montoPagar;
+
+    @FXML
     private TextField nombre;
 
     @FXML
     private Button update;
+
 
     @FXML
     void clickActualizar(ActionEvent event) {
@@ -189,5 +217,63 @@ public class ControladorClienteFX {
         }
     }
 
+    @FXML
+    void clickComposite(ActionEvent event) {
+        mostrar = !mostrar;
+        adapter.setVisible(!mostrar);
+        bttBuild.setVisible(!mostrar);
+    }
+
+    @FXML
+    void clickAdapter(ActionEvent event) {
+        mostrar = !mostrar;
+        montoPagar.setVisible(mostrar);
+        bttNequi.setVisible(mostrar);
+        bttPaypal.setVisible(mostrar);
+        composite.setVisible(!mostrar);
+        bttBuild.setVisible(!mostrar);
+
+    }
+
+    @FXML
+    void clickBuilder(ActionEvent event) {   
+    }
+
+    @FXML
+    void NequiClick(ActionEvent event) {
+        metodoPago = "Nequi";
+        double monto = Double.parseDouble(montoPagar.getText());
+        String mensaje = ProcesarPago.procesarPago("Nequi", monto);
+        montoPagar.clear();
+        JOptionPane.showMessageDialog(null, mensaje); 
+    }
+
+    @FXML
+    void PaypalClick(ActionEvent event) {
+        metodoPago = "Paypal";
+        double monto = Double.parseDouble(montoPagar.getText());
+        String mensaje =ProcesarPago.procesarPago("Paypal", monto);
+        montoPagar.clear();
+        JOptionPane.showMessageDialog(null, mensaje);
+    }
+    /* 
+    void ProcesarPago(String metodo, double monto){
+        IPagoExterno pagoExterno = null;
+        if(metodo.equalsIgnoreCase("Nequi")){
+            String telefono = JOptionPane.showInputDialog("Ingrese Numero de Telefono");
+            String nombre = JOptionPane.showInputDialog("Ingrese Nombre");
+            pagoExterno = new NequiAdapter(new Nequi(telefono, nombre));
+        }
+        else if (metodo.equalsIgnoreCase("Paypal")){
+            String email = JOptionPane.showInputDialog("Ingrese Email");
+            String cuenta = JOptionPane.showInputDialog("Ingrese el numero de Cuenta");
+            pagoExterno = new PaypalAdapter(new Paypal(email, cuenta));
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Metodo de Pago Invalido");
+        }
+        JOptionPane.showMessageDialog(null, pagoExterno.pagar(monto));
+
+    } */
 }
 
