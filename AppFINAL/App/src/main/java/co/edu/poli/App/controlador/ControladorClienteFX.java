@@ -1,10 +1,25 @@
 package co.edu.poli.App.controlador;
 
+import java.lang.ProcessHandle.Info;
 import java.sql.SQLException;
 import java.util.List;
 
+import co.edu.poli.App.modelo.Certificacion;
+
+//import javax.swing.JOptionPane;
+
 import co.edu.poli.App.modelo.Cliente;
+import co.edu.poli.App.modelo.Evaluacion;
+import co.edu.poli.App.modelo.PoliticaEntrega;
+//import co.edu.poli.App.modelo.IPagoExterno;
+//import co.edu.poli.App.modelo.Nequi;
+//import co.edu.poli.App.modelo.NequiAdapter;
+//import co.edu.poli.App.modelo.Paypal;
+//import co.edu.poli.App.modelo.PaypalAdapter;
+//import co.edu.poli.App.modelo.ProcesarPago;
 import co.edu.poli.App.modelo.Producto;
+import co.edu.poli.App.modelo.ProductoElectrico;
+import co.edu.poli.App.modelo.Proveedor;
 import co.edu.poli.App.servicio.DaoCliente;
 import co.edu.poli.App.servicio.DaoProductoAlimenticio;
 import co.edu.poli.App.servicio.DaoProductoElectrico;
@@ -13,13 +28,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.control.Label;
 
 public class ControladorClienteFX {
 
-
+    private Boolean mostrar = false;
     private DaoCliente controladorCliente;
     private Button ultimoBotonPresionado;
     private DaoProductoAlimenticio controladorProductoAlimento;
@@ -31,12 +48,39 @@ public class ControladorClienteFX {
         this.controladorCliente = new DaoCliente();
         this.controlaProductoElectrico = new DaoProductoElectrico();
     }
-    
+
+    @FXML
+    private CheckBox CheckCertificacion;
+
+    @FXML
+    private CheckBox CheckEvaluacion;
+
+    @FXML
+    private CheckBox CheckPolitica;
+
+    @FXML
+    private Label LabelProveedor;
+
+    @FXML
+    private Button adapter;
+
+    @FXML
+    private Button bttBuild;
+
+    @FXML
+    private Button bttNequi;
+
     @FXML
     private Button bttOk;
 
     @FXML
+    private Button bttPaypal;
+
+    @FXML
     private Button clonar;
+
+    @FXML
+    private Button composite;
 
     @FXML
     private Button consult;
@@ -54,10 +98,17 @@ public class ControladorClienteFX {
     private Button insert;
 
     @FXML
+    private Button bttCrearProveedor;
+
+    @FXML
+    private TextField montoPagar;
+
+    @FXML
     private TextField nombre;
 
     @FXML
     private Button update;
+
 
     @FXML
     void clickActualizar(ActionEvent event) {
@@ -119,6 +170,14 @@ public class ControladorClienteFX {
 
     }
 
+    private void mostrarAlerta(String titulo, String header, String contenido) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(titulo);
+        alert.setHeaderText(header);
+        alert.setContentText(contenido);
+        alert.show();
+    }
+
     @FXML
     void clickOk(ActionEvent event) {
         int id = 0;
@@ -128,56 +187,36 @@ public class ControladorClienteFX {
         }
         Cliente cliente = null;
         String nombres = nombre.getText();
-        Alert alert = new Alert(AlertType.INFORMATION);
 
         if(ultimoBotonPresionado == consultid){
             cliente= controladorCliente.buscarPorId(id);
-            alert.setHeaderText("Informacion Sobre:  " + cliente.getNombre() + " :)");
-            alert.setContentText(cliente.toString());
-            alert.setTitle("Cliente: " + cliente.getNombre());
-            alert.show();
+            mostrarAlerta("Cliente" + cliente.getNombre(), "Informacion Sobre: " + cliente.getNombre() + " :)", cliente.toString());
         }
         else if(ultimoBotonPresionado == delete){
             cliente = controladorCliente.eliminarObjeto(id);
-            alert.setContentText(cliente.toString());
-            alert.setHeaderText("Cliente Eliminado Exitosamente: " + cliente.getNombre() + " :(");
-            alert.setTitle("Cliente Eliminado: " + cliente.getNombre());
-            alert.show();
+            mostrarAlerta("Cliente Eliminado: " + cliente.getNombre(), "Cliente Eliminado Exitosamente: " + cliente.getNombre() + " :(", cliente.toString());
         }
         else if(ultimoBotonPresionado == insert){
             cliente = new Cliente(nombres);
-            alert.setContentText(controladorCliente.ingresarObjeto(cliente) + ": " +cliente.getNombre());
-            alert.setHeaderText("Cliente Insertado Exitosamente: " + cliente.getNombre());
-            alert.setTitle("Cliente Ingresado: " + cliente.getNombre());
-            alert.show();
+            mostrarAlerta("Cliente Ingresado: " + cliente.getNombre(), "Cliente Insertado Exitosamente: " + cliente.getNombre(), controladorCliente.ingresarObjeto(cliente) + ": " + cliente.getNombre());
         }
         else if (ultimoBotonPresionado == update){
             cliente = new Cliente(id,nombres);
-            alert.setHeaderText("Cliente Actualizado Exitosamente: " + cliente.getNombre());
-            alert.setContentText(controladorCliente.actualizarObjeto(cliente) + ": " +cliente.getNombre());
-            alert.setTitle("Cliente Actualizado: " + cliente.getNombre());
-            alert.show();
+            mostrarAlerta("Cliente Actualizado: " + cliente.getNombre(), "Cliente Actualizado Exitosamente: " + cliente.getNombre(), controladorCliente.actualizarObjeto(cliente) + ": " + cliente.getNombre());
         }
         else if (ultimoBotonPresionado == clonar){
             if(nombre.getText().equalsIgnoreCase("electrico")){
                 Producto electrico = controlaProductoElectrico.buscarPorId(id);
                 Producto electrico2 = electrico.clonar();
-                alert.setHeaderText("Producto Electrico Clonado Exitosamente: " + electrico2.getDescripcion());
                 controlaProductoElectrico.ingresarObjeto(electrico2);
-                alert.setContentText(electrico2.toString());
-                alert.setTitle("Producto Electrico" + electrico2.getDescripcion());
-                alert.show();
+                mostrarAlerta("Producto Electrico" + electrico2.getDescripcion(), "Producto Electrico Clonado Exitosamente: " + electrico2.getDescripcion(), electrico2.toString());
             }
             else if(nombre.getText().equalsIgnoreCase("alimento")){
                 Producto alimento = controladorProductoAlimento.buscarPorId(id);
                 Producto alimento2 = alimento.clonar();
-                alert.setHeaderText("Producto Alimento Clonado Exitosamente: " + alimento2.getDescripcion());
                 controladorProductoAlimento.ingresarObjeto(alimento2);
-                alert.setContentText (alimento2.toString());
-                alert.setTitle("Producto Alimento " + alimento2.getDescripcion());
-                alert.show();
+                mostrarAlerta("Producto Alimento " + alimento2.getDescripcion(), "Producto Alimento Clonado Exitosamente: " + alimento2.getDescripcion(), alimento2.toString());
             }
-
         }
     }
     @FXML
@@ -188,5 +227,92 @@ public class ControladorClienteFX {
         }
     }
 
-}
+    @FXML
+    void clickComposite(ActionEvent event) {
+        mostrar = !mostrar;
+        adapter.setVisible(!mostrar);
+        bttBuild.setVisible(!mostrar);
+    }
 
+    @FXML
+    void clickAdapter(ActionEvent event) {
+        mostrar = !mostrar;
+        montoPagar.setVisible(mostrar);
+        bttNequi.setVisible(mostrar);
+        bttPaypal.setVisible(mostrar);
+        composite.setVisible(!mostrar);
+        bttBuild.setVisible(!mostrar);
+
+    }
+
+    @FXML
+    void clickBuilder(ActionEvent event) {   
+        mostrar = !mostrar;
+        adapter.setVisible(!mostrar);
+        composite.setVisible(!mostrar);
+        LabelProveedor.setVisible(mostrar);
+        CheckCertificacion.setVisible(mostrar);
+        CheckEvaluacion.setVisible(mostrar);
+        CheckPolitica.setVisible(mostrar);
+        bttCrearProveedor.setVisible(mostrar);
+    }
+
+    @FXML
+    void clickCrearProveedor(ActionEvent event) {
+        Proveedor.Builder builder = new Proveedor.Builder("Paulis INC");
+        Alert alert = new Alert(AlertType.INFORMATION);
+        if (CheckCertificacion.isSelected()) {
+            builder.conCertificacion(new Certificacion("ISO 9001"));
+        } 
+        if (CheckEvaluacion.isSelected()) {
+            builder.conEvaluacion(new Evaluacion("5 Estrellas"));
+        } 
+        if (CheckPolitica.isSelected()) {
+            builder.conPoliticaEntrega(new PoliticaEntrega("Entrega en 48 horas"));
+        } 
+        
+        Proveedor proveedor = builder.build();
+
+        alert.setContentText(proveedor.toString());
+        alert.setTitle("iNFORMACIÓN PROVEEDOR");
+        alert.show();
+
+    }
+
+
+
+    @FXML
+    void NequiClick(ActionEvent event) {
+        /*double monto = Double.parseDouble(montoPagar.getText());
+        String mensaje = ProcesarPago.procesarPago("Nequi", monto);
+        montoPagar.clear();
+        JOptionPane.showMessageDialog(null, mensaje); */
+    }
+
+    @FXML
+    void PaypalClick(ActionEvent event) {
+        /*double monto = Double.parseDouble(montoPagar.getText());
+        String mensaje = ProcesarPago.procesarPago("Paypal", monto);
+        montoPagar.clear();
+        JOptionPane.showMessageDialog(null, mensaje);*/
+    }
+    /* 
+    void ProcesarPago(String metodo, double monto){
+        IPagoExterno pagoExterno = null;
+        if(metodo.equalsIgnoreCase("Nequi")){
+            String telefono = JOptionPane.showInputDialog("Ingrese Numero de Telefono");
+            String nombre = JOptionPane.showInputDialog("Ingrese Nombre");
+            pagoExterno = new NequiAdapter(new Nequi(telefono, nombre));
+        }
+        else if (metodo.equalsIgnoreCase("Paypal")){
+            String email = JOptionPane.showInputDialog("Ingrese Email");
+            String cuenta = JOptionPane.showInputDialog("Ingrese el numero de Cuenta");
+            pagoExterno = new PaypalAdapter(new Paypal(email, cuenta));
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Metodo de Pago Invalido");
+        }
+        JOptionPane.showMessageDialog(null, pagoExterno.pagar(monto));
+
+    } */
+}

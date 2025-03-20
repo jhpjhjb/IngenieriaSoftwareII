@@ -9,6 +9,6 @@ public class Certificacion {
 
     @Override
     public String toString() {
-        return "Certificacion: " + tipo;
+        return "" + tipo;
     }
 }

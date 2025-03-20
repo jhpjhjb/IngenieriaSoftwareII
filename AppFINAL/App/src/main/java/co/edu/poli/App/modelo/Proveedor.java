@@ -17,6 +17,12 @@ public class Proveedor {
     public String toString() {
         String resultado = "Proveedor: " + nombre + "\n";
 
+        if (certificacion != null) {
+            resultado += "Certificación: " + certificacion + "\n";
+        } else {
+            resultado += "Certificación: No asignada\n";
+        }
+
         if (evaluacion != null) {
             resultado += "Evaluación: " + evaluacion + "\n";
         } else {
@@ -27,12 +33,6 @@ public class Proveedor {
             resultado += "Política de Entrega: " + politicaEntrega + "\n";
         } else {
             resultado += "Política de Entrega: No asignada\n";
-        }
-
-        if (certificacion != null) {
-            resultado += "Certificación: " + certificacion + "\n";
-        } else {
-            resultado += "Certificación: No asignada\n";
         }
 
     return resultado;

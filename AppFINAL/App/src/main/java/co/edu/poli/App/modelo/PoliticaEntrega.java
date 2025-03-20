@@ -9,6 +9,6 @@ public class PoliticaEntrega {
 
     @Override
     public String toString() {
-        return "PoliticaEntrega: " + detalles;
+        return "" + detalles;
     }
 }

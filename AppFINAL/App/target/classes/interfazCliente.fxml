@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -41,5 +42,20 @@
       <TextField fx:id="id1" disable="true" layoutX="315.0" layoutY="122.0" prefHeight="25.0" prefWidth="192.0" promptText="ID" />
       <TextField fx:id="nombre" disable="true" layoutX="315.0" layoutY="161.0" onKeyPressed="#validarEnter" prefHeight="25.0" prefWidth="192.0" promptText="Nombre" />
       <Button fx:id="bttOk" disable="true" layoutX="315.0" layoutY="201.0" mnemonicParsing="false" onAction="#clickOk" prefHeight="25.0" prefWidth="43.0" text="Ok" />
+      <Button fx:id="bttBuild" layoutX="315.0" layoutY="240.0" mnemonicParsing="false" onAction="#clickBuilder" text="Builder" />
+      <Button fx:id="composite" layoutX="384.0" layoutY="240.0" mnemonicParsing="false" onAction="#clickComposite" text="Composite" />
+      <Button fx:id="adapter" layoutX="472.0" layoutY="240.0" mnemonicParsing="false" onAction="#clickAdapter" text="Adapter" />
+      <Button fx:id="bttNequi" layoutX="439.0" layoutY="319.0" mnemonicParsing="false" onAction="#NequiClick" text="Nequi" visible="false" />
+      <Button fx:id="bttPaypal" layoutX="517.0" layoutY="320.0" mnemonicParsing="false" onAction="#PaypalClick" text="PayPal" visible="false" />
+      <TextField fx:id="montoPagar" layoutX="427.0" layoutY="274.0" promptText="Monto a Pagar" visible="false" />
+      <CheckBox fx:id="CheckCertificacion" layoutX="298.0" layoutY="291.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="120.0" text="Certificación" visible="false" />
+      <CheckBox fx:id="CheckEvaluacion" layoutX="298.0" layoutY="311.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="120.0" text="Evaluación" visible="false" />
+      <CheckBox fx:id="CheckPolitica" layoutX="298.0" layoutY="331.0" mnemonicParsing="false" text="Politica de Entrega" visible="false" />
+      <Label fx:id="LabelProveedor" layoutX="296.0" layoutY="262.0" prefHeight="34.0" prefWidth="91.0" text="PROVEERDOR" visible="false">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Button fx:id="bttCrearProveedor" layoutX="296.0" layoutY="352.0" mnemonicParsing="false" onAction="#clickCrearProveedor" prefHeight="25.0" prefWidth="120.0" text="Crear" visible="false" />
    </children>
 </AnchorPane>
