@@ -5,7 +5,6 @@ import java.util.List;
 
 import co.edu.poli.App.modelo.Cliente;
 import co.edu.poli.App.modelo.Producto;
-import co.edu.poli.App.modelo.ProductoElectrico;
 import co.edu.poli.App.servicio.DaoCliente;
 import co.edu.poli.App.servicio.DaoProductoAlimenticio;
 import co.edu.poli.App.servicio.DaoProductoElectrico;

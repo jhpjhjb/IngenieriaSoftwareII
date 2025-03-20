@@ -1,8 +1,6 @@
 package co.edu.poli.App.view;
 
-import co.edu.poli.App.controlador.ControladorCliente;
 import co.edu.poli.App.controlador.ControladorClienteFX;
-import co.edu.poli.App.controlador.ControladorProductos;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

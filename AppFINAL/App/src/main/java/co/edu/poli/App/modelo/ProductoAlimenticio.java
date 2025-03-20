@@ -3,13 +3,9 @@ package co.edu.poli.App.modelo;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import co.edu.poli.App.controlador.ControladorProductos;
-
 public class ProductoAlimenticio extends Producto {
 
     private String aporteCalorico;
-
-    private ControladorProductos controladorProductos;
     
     public String getAporteCalorias() {
         return aporteCalorico;
@@ -45,17 +41,6 @@ public class ProductoAlimenticio extends Producto {
 
     @Override
     public Producto clonar() {
-    try {
-        ControladorProductos controladorProductos = new ControladorProductos();
-        ProductoAlimenticio producto = new ProductoAlimenticio(0, getDescripcion(), getAporteCalorias());
-
-        String mensaje = controladorProductos.ingresarProductoAlimenticio(producto);
-        System.out.println(mensaje);
-
-        return producto;
-    } catch (Exception e) {
-        e.printStackTrace();
-        return null;
-    }
+        return new ProductoAlimenticio(this.getId(), this.getDescripcion(), this.getAporteCalorias());
     }
 }
