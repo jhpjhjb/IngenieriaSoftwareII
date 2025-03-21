@@ -265,7 +265,7 @@ public class ControladorClienteFX {
             builder.conCertificacion(new Certificacion("ISO 9001"));
         } 
         if (CheckEvaluacion.isSelected()) {
-            builder.conEvaluacion(new Evaluacion("6 Estrellas"));
+            builder.conEvaluacion(new Evaluacion("5 Estrellas"));
         } 
         if (CheckPolitica.isSelected()) {
             builder.conPoliticaEntrega(new PoliticaEntrega("Entrega en 48 horas"));

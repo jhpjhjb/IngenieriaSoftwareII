@@ -20,8 +20,6 @@ public class Aplicacion extends Application{
         primaryStage.setTitle("Gestión de Clientes");
         primaryStage.show();
     }
-
-
     public static void main(String[] args) {
         launch();
     }
