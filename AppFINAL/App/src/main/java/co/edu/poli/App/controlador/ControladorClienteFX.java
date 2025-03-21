@@ -241,6 +241,12 @@ public class ControladorClienteFX {
         montoPagar.clear();
         JOptionPane.showMessageDialog(null, mensaje);
     }
+
+    @FXML
+    private void clickCrearProveedor(ActionEvent event) {
+    // Código del botón
+    }
+
     /* 
     void ProcesarPago(String metodo, double monto){
         IPagoExterno pagoExterno = null;
