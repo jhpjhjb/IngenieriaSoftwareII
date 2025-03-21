@@ -237,7 +237,7 @@ public class ControladorClienteFX {
     @FXML
     void PaypalClick(ActionEvent event) {
         double monto = Double.parseDouble(montoPagar.getText());
-        String mensaje = ProcesarPago.procesarPago("Paypal", monto);
+        String mensaje = ProcesarPago.procesarPago("Paypal hola", monto);
         montoPagar.clear();
         JOptionPane.showMessageDialog(null, mensaje);
     }

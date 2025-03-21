@@ -41,11 +41,5 @@
       <TextField fx:id="id1" disable="true" layoutX="315.0" layoutY="122.0" prefHeight="25.0" prefWidth="192.0" promptText="ID" />
       <TextField fx:id="nombre" disable="true" layoutX="315.0" layoutY="161.0" onKeyPressed="#validarEnter" prefHeight="25.0" prefWidth="192.0" promptText="Nombre" />
       <Button fx:id="bttOk" disable="true" layoutX="315.0" layoutY="201.0" mnemonicParsing="false" onAction="#clickOk" prefHeight="25.0" prefWidth="43.0" text="Ok" />
-      <Button fx:id="bttBuild" layoutX="315.0" layoutY="240.0" mnemonicParsing="false" onAction="#clickBuilder" text="Builder" />
-      <Button fx:id="composite" layoutX="384.0" layoutY="240.0" mnemonicParsing="false" onAction="#clickComposite" text="Composite" />
-      <Button fx:id="adapter" layoutX="472.0" layoutY="240.0" mnemonicParsing="false" onAction="#clickAdapter" text="Adapter" />
-      <Button fx:id="bttNequi" layoutX="439.0" layoutY="319.0" mnemonicParsing="false" onAction="#NequiClick" text="Nequi" visible="false" />
-      <Button fx:id="bttPaypal" layoutX="517.0" layoutY="320.0" mnemonicParsing="false" onAction="#PaypalClick" text="PayPal" visible="false" />
-      <TextField fx:id="montoPagar" layoutX="427.0" layoutY="274.0" promptText="Monto a Pagar" visible="false" />
    </children>
 </AnchorPane>
