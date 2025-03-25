@@ -7,7 +7,10 @@ import javax.swing.JOptionPane;
 
 import co.edu.poli.App.modelo.Certificacion;
 import co.edu.poli.App.modelo.Cliente;
+import co.edu.poli.App.modelo.Departamentos;
+import co.edu.poli.App.modelo.Empleado;
 import co.edu.poli.App.modelo.Evaluacion;
+import co.edu.poli.App.modelo.IGeneral;
 import co.edu.poli.App.modelo.IPagoExterno;
 import co.edu.poli.App.modelo.Nequi;
 import co.edu.poli.App.modelo.NequiAdapter;
@@ -28,9 +31,11 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TreeView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 
 public class ControladorClienteFX {
 
@@ -39,14 +44,6 @@ public class ControladorClienteFX {
     private Button ultimoBotonPresionado;
     private DaoProductoAlimenticio controladorProductoAlimento;
     private DaoProductoElectrico controlaProductoElectrico;
-
-
-    public ControladorClienteFX() throws ClassNotFoundException, SQLException {
-        this.controladorProductoAlimento = new DaoProductoAlimenticio();
-        this.controladorCliente = new DaoCliente();
-        this.controlaProductoElectrico = new DaoProductoElectrico();
-    }
-
     @FXML
     private CheckBox CheckCertificacion;
 
@@ -105,6 +102,17 @@ public class ControladorClienteFX {
 
     @FXML
     private Button update;
+
+    @FXML
+    private ListView<String> jerarquia;
+
+
+    public ControladorClienteFX() throws ClassNotFoundException, SQLException {
+        this.controladorProductoAlimento = new DaoProductoAlimenticio();
+        this.controladorCliente = new DaoCliente();
+        this.controlaProductoElectrico = new DaoProductoElectrico();
+    }
+
 
 
     @FXML
@@ -229,6 +237,35 @@ public class ControladorClienteFX {
         mostrar = !mostrar;
         adapter.setVisible(!mostrar);
         bttBuild.setVisible(!mostrar);
+        jerarquia.setVisible(mostrar);
+        jerarquia.getItems().clear();
+
+        Departamentos departamentoTI = new Departamentos("Tecnología");
+        Departamentos departamentoRH = new Departamentos("Recursos Humanos");
+
+        Empleado empleado1 = new Empleado("Juan Pérez", "Desarrollador", "3,500,000");
+        Empleado empleado2 = new Empleado("Ana Gómez", "Analista de Sistemas", "4,200,000");
+        Empleado empleado3 = new Empleado("Carlos López", "Reclutador", "3,000,000");
+        Empleado empleado4 = new Empleado("Carlos Gomez", "Jefe de Todos", "30,000,000");
+
+        departamentoTI.addComponent(empleado1);
+        departamentoTI.addComponent(empleado2);
+        departamentoRH.addComponent(empleado3);
+
+        Departamentos empresa = new Departamentos("Empresa XYZ");
+        empresa.addComponent(departamentoTI);
+        empresa.addComponent(departamentoRH);
+        empresa.addComponent(empleado4);
+
+        jerarquia.getItems().add(empresa.detalles());
+        for (IGeneral dep : empresa.getComponentes()) {
+            jerarquia.getItems().add("  " + dep.detalles());
+            if (dep instanceof Departamentos) {
+                for (IGeneral emp : ((Departamentos) dep).getComponentes()) {
+                jerarquia.getItems().add("    " + emp.detalles()); 
+            }
+            }   
+        }
     }
 
 
