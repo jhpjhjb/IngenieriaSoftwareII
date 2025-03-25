@@ -3,20 +3,18 @@ package co.edu.poli.App.controlador;
 import java.lang.ProcessHandle.Info;
 import java.sql.SQLException;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 import co.edu.poli.App.modelo.Certificacion;
-
-//import javax.swing.JOptionPane;
-
 import co.edu.poli.App.modelo.Cliente;
 import co.edu.poli.App.modelo.Evaluacion;
+import co.edu.poli.App.modelo.IPagoExterno;
+import co.edu.poli.App.modelo.Nequi;
+import co.edu.poli.App.modelo.NequiAdapter;
+import co.edu.poli.App.modelo.Paypal;
+import co.edu.poli.App.modelo.PaypalAdapter;
 import co.edu.poli.App.modelo.PoliticaEntrega;
-//import co.edu.poli.App.modelo.IPagoExterno;
-//import co.edu.poli.App.modelo.Nequi;
-//import co.edu.poli.App.modelo.NequiAdapter;
-//import co.edu.poli.App.modelo.Paypal;
-//import co.edu.poli.App.modelo.PaypalAdapter;
-//import co.edu.poli.App.modelo.ProcesarPago;
+import co.edu.poli.App.modelo.ProcesarPago;
 import co.edu.poli.App.modelo.Producto;
 import co.edu.poli.App.modelo.ProductoElectrico;
 import co.edu.poli.App.modelo.Proveedor;
@@ -60,7 +58,6 @@ public class ControladorClienteFX {
 
     @FXML
     private Label LabelProveedor;
-
     @FXML
     private Button adapter;
 
@@ -234,6 +231,33 @@ public class ControladorClienteFX {
         bttBuild.setVisible(!mostrar);
     }
 
+
+    @FXML
+    void NequiClick(ActionEvent event) {
+        if (!montoPagar.getText().isEmpty()) {
+            double monto = Double.parseDouble(montoPagar.getText());
+            String mensaje = ProcesarPago.procesarPago("Nequi", monto);
+            montoPagar.clear();
+            JOptionPane.showMessageDialog(null, mensaje); 
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Ingrese Un Valor Numerico", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    @FXML
+    void PaypalClick(ActionEvent event) {
+        if (!montoPagar.getText().isEmpty()) {
+            double monto = Double.parseDouble(montoPagar.getText());
+            String mensaje = ProcesarPago.procesarPago("Paypal", monto);
+            montoPagar.clear();
+            JOptionPane.showMessageDialog(null, mensaje); 
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Ingrese Un Valor Numerico", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     @FXML
     void clickAdapter(ActionEvent event) {
         mostrar = !mostrar;
@@ -279,40 +303,4 @@ public class ControladorClienteFX {
 
     }
 
-
-
-    @FXML
-    void NequiClick(ActionEvent event) {
-        /*double monto = Double.parseDouble(montoPagar.getText());
-        String mensaje = ProcesarPago.procesarPago("Nequi", monto);
-        montoPagar.clear();
-        JOptionPane.showMessageDialog(null, mensaje); */
-    }
-
-    @FXML
-    void PaypalClick(ActionEvent event) {
-        /*double monto = Double.parseDouble(montoPagar.getText());
-        String mensaje = ProcesarPago.procesarPago("Paypal", monto);
-        montoPagar.clear();
-        JOptionPane.showMessageDialog(null, mensaje);*/
-    }
-    /* 
-    void ProcesarPago(String metodo, double monto){
-        IPagoExterno pagoExterno = null;
-        if(metodo.equalsIgnoreCase("Nequi")){
-            String telefono = JOptionPane.showInputDialog("Ingrese Numero de Telefono");
-            String nombre = JOptionPane.showInputDialog("Ingrese Nombre");
-            pagoExterno = new NequiAdapter(new Nequi(telefono, nombre));
-        }
-        else if (metodo.equalsIgnoreCase("Paypal")){
-            String email = JOptionPane.showInputDialog("Ingrese Email");
-            String cuenta = JOptionPane.showInputDialog("Ingrese el numero de Cuenta");
-            pagoExterno = new PaypalAdapter(new Paypal(email, cuenta));
-        }
-        else{
-            JOptionPane.showMessageDialog(null, "Metodo de Pago Invalido");
-        }
-        JOptionPane.showMessageDialog(null, pagoExterno.pagar(monto));
-
-    } */
 }

@@ -43,4 +43,5 @@ public class ProductoAlimenticio extends Producto {
     public Producto clonar() {
         return new ProductoAlimenticio(this.getId(), this.getDescripcion(), this.getAporteCalorias());
     }
+
 }
