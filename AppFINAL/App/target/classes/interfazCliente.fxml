@@ -4,6 +4,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.paint.Color?>
@@ -11,7 +12,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="558.0" prefWidth="659.0" style="-fx-background-image: url(&quot;https://www.gifcen.com/wp-content/uploads/2022/01/wallpaper-gif-9.gif&quot;); -fx-background-position: center;" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.App.controlador.ControladorClienteFX">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="592.0" prefWidth="659.0" style="-fx-background-image: url(&quot;https://www.gifcen.com/wp-content/uploads/2022/01/wallpaper-gif-9.gif&quot;); -fx-background-position: center;" styleClass="radioButton" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.App.controlador.ControladorClienteFX">
    <children>
       <Button fx:id="insert" layoutX="52.0" layoutY="102.0" mnemonicParsing="false" onAction="#clickInsertar" prefHeight="44.0" prefWidth="138.0" stylesheets="@estilos.css" text="Insertar" />
       <Button fx:id="delete" layoutX="52.0" layoutY="161.0" mnemonicParsing="false" onAction="#clickEliminar" prefHeight="44.0" prefWidth="138.0" stylesheets="@estilos.css" text="Eliminar" />
@@ -19,7 +20,7 @@
       <Button fx:id="consult" layoutX="52.0" layoutY="271.0" mnemonicParsing="false" onAction="#clickConsultar" prefHeight="44.0" prefWidth="138.0" stylesheets="@estilos.css" text="Consultar" />
       <Button fx:id="consultid" layoutX="52.0" layoutY="326.0" mnemonicParsing="false" onAction="#clickConsultarId" prefHeight="44.0" prefWidth="138.0" stylesheets="@estilos.css" text="Consultar por Id" />
       <Button fx:id="clonar" layoutX="52.0" layoutY="387.0" mnemonicParsing="false" onAction="#clickClonarId" prefHeight="44.0" prefWidth="138.0" stylesheets="@estilos.css" text="Clonar" />
-      <Label alignment="CENTER" layoutX="175.0" layoutY="24.0" prefHeight="56.0" prefWidth="318.0" styleClass="titulo" text="PAULIS SHOP">
+      <Label alignment="CENTER" layoutX="175.0" layoutY="24.0" prefHeight="56.0" prefWidth="318.0" styleClass="titulo" text="INGES SHOP">
          <font>
             <Font name="System Bold" size="7.0" />
          </font>
@@ -59,5 +60,13 @@
       </Label>
       <Button fx:id="bttCrearProveedor" layoutX="265.0" layoutY="431.0" mnemonicParsing="false" onAction="#clickCrearProveedor" prefHeight="25.0" prefWidth="120.0" text="Crear" visible="false" />
       <ListView fx:id="jerarquia" layoutX="237.0" layoutY="331.0" prefHeight="200.0" prefWidth="406.0" visible="false" />
+      <Button fx:id="bttBridge" layoutX="265.0" layoutY="365.0" mnemonicParsing="false" onAction="#clickBridge" stylesheets="@estilos.css" text="Bridge" />
+      <Button fx:id="bttDecorator" layoutX="379.0" layoutY="365.0" mnemonicParsing="false" onAction="#clickDecorator" stylesheets="@estilos.css" text="Decorator" />
+      <RadioButton fx:id="nacional" layoutX="260.0" layoutY="460.0" mnemonicParsing="false" styleClass="radioBotones" text="Envio Nacional" visible="false" />
+      <RadioButton fx:id="internacional" layoutX="260.0" layoutY="420.0" mnemonicParsing="false" styleClass="radioBotones" text="Envio Internacional" visible="false" />
+      <RadioButton fx:id="envioFragil" layoutX="462.0" layoutY="456.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="138.0" styleClass="radioBotones" text="FRAGIL  [⚠]" visible="false" />
+      <RadioButton fx:id="envioDoc" layoutX="460.0" layoutY="420.0" mnemonicParsing="false" styleClass="radioBotones" text="DOCUMENTO [📄]" visible="false" />
+      <RadioButton fx:id="envioNorm" layoutX="462.0" layoutY="496.0" mnemonicParsing="false" styleClass="radioBotones" text="NORMAL [📦]" visible="false" />
+      <Button fx:id="bttBridgeEnvio" layoutX="265.0" layoutY="509.0" mnemonicParsing="false" onAction="#clickEnvio" stylesheets="@estilos.css" text="Crear Envio" visible="false" />
    </children>
 </AnchorPane>

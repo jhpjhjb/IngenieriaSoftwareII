@@ -8,7 +8,7 @@
     -fx-font-size: 40px !important;
 }
 
-.button {
+.button{
     -fx-background-color: linear-gradient(to bottom, #ffcc00, #ffaa00);
     -fx-text-fill: black;
     -fx-font-size: 16px;
@@ -66,4 +66,38 @@
     -fx-background-color: #ffaa00;
     -fx-text-fill: black;
     -fx-font-weight: bold;
+}
+
+.radioBotones {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ffdd44;
+    -fx-font-size: 14px; 
+    -fx-font-weight: bold;
+    -fx-border-color: #ffaa00;
+    -fx-border-width: 2px;
+    -fx-border-radius: 50px;
+    -fx-padding: 5px 10px;
+    
+}
+
+.radioBotones:selected {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ffcc00;
+    -fx-border-color: #eeff00;
+    -fx-border-width: 2px;
+    -fx-border-radius: 50px;
+}
+
+.radioBotones:hover {
+    -fx-text-fill: #ffff;
+}
+
+.fragil{
+    -fx-text-fill: #ffdd44;
+    -fx-font-size: 14px; 
+    -fx-font-weight: bold;
+    -fx-border-color: #ffaa00;
+    -fx-border-width: 2px;
+    -fx-border-radius: 50px;
+    -fx-padding: 5px 10px;
 }
