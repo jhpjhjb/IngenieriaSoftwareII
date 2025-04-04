@@ -12,7 +12,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="592.0" prefWidth="659.0" style="-fx-background-image: url(&quot;https://www.gifcen.com/wp-content/uploads/2022/01/wallpaper-gif-9.gif&quot;); -fx-background-position: center;" styleClass="radioButton" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.App.controlador.ControladorClienteFX">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="659.0" style="-fx-background-image: url(&quot;https://www.gifcen.com/wp-content/uploads/2022/01/wallpaper-gif-9.gif&quot;); -fx-background-position: center;" styleClass="radioButton" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.App.controlador.ControladorClienteFX">
    <children>
       <Button fx:id="insert" layoutX="52.0" layoutY="102.0" mnemonicParsing="false" onAction="#clickInsertar" prefHeight="44.0" prefWidth="138.0" stylesheets="@estilos.css" text="Insertar" />
       <Button fx:id="delete" layoutX="52.0" layoutY="161.0" mnemonicParsing="false" onAction="#clickEliminar" prefHeight="44.0" prefWidth="138.0" stylesheets="@estilos.css" text="Eliminar" />
@@ -73,6 +73,7 @@
       <CheckBox fx:id="EnvioGratCheck" layoutX="388.0" layoutY="482.0" mnemonicParsing="false" prefHeight="16.0" prefWidth="95.0" text="Envío Gratis" textFill="WHITE" visible="false" />
       <CheckBox fx:id="PuntosCheck" layoutX="388.0" layoutY="498.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="63.0" text="Puntos" textFill="WHITE" visible="false" />
       <Label fx:id="CarritoLabel" layoutX="401.0" layoutY="417.0" prefHeight="30.0" prefWidth="134.0" text="Carrito 🛒" visible="false" />
-      <Button fx:id="bttCarrito" layoutX="385.0" layoutY="528.0" mnemonicParsing="false" onAction="#clickCrearDecorator" prefHeight="44.0" prefWidth="150.0" stylesheets="@estilos.css" text="Crear Carrito" visible="false" />
+      <Button fx:id="bttCarrito" layoutX="385.0" layoutY="553.0" mnemonicParsing="false" onAction="#clickCrearDecorator" prefHeight="44.0" prefWidth="150.0" stylesheets="@estilos.css" text="Crear Carrito" visible="false" />
+      <CheckBox fx:id="carritoVip" layoutX="388.0" layoutY="527.0" mnemonicParsing="false" text="Carrito Vip" textFill="WHITE" visible="false" />
    </children>
 </AnchorPane>

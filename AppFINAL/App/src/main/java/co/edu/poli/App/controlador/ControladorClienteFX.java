@@ -5,37 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-import co.edu.poli.App.modelo.CarritoBasico;
-import co.edu.poli.App.modelo.Certificacion;
-import co.edu.poli.App.modelo.Cliente;
-import co.edu.poli.App.modelo.Departamentos;
-import co.edu.poli.App.modelo.Descuento;
-import co.edu.poli.App.modelo.Destino;
-import co.edu.poli.App.modelo.DestinoInter;
-import co.edu.poli.App.modelo.DestinoNac;
-import co.edu.poli.App.modelo.Empleado;
-import co.edu.poli.App.modelo.EnvioGratis;
-import co.edu.poli.App.modelo.Evaluacion;
-import co.edu.poli.App.modelo.IGeneral;
-import co.edu.poli.App.modelo.IPagoExterno;
-import co.edu.poli.App.modelo.Nequi;
-import co.edu.poli.App.modelo.NequiAdapter;
-import co.edu.poli.App.modelo.Paquete;
-import co.edu.poli.App.modelo.PaqueteDocumento;
-import co.edu.poli.App.modelo.PaqueteFragil;
-import co.edu.poli.App.modelo.PaqueteNormal;
-import co.edu.poli.App.modelo.Paypal;
-import co.edu.poli.App.modelo.PaypalAdapter;
-import co.edu.poli.App.modelo.PoliticaEntrega;
-import co.edu.poli.App.modelo.ProcesarPago;
-import co.edu.poli.App.modelo.Producto;
 import co.edu.poli.App.modelo.*;
-import co.edu.poli.App.modelo.ProductoElectrico;
-import co.edu.poli.App.modelo.Proveedor;
-import co.edu.poli.App.modelo.Carrito;
-import co.edu.poli.App.modelo.CarritoBasico;
-import co.edu.poli.App.modelo.CarritoDecorador;
-import co.edu.poli.App.modelo.PuntosDeCompra;
 import co.edu.poli.App.servicio.DaoCliente;
 import co.edu.poli.App.servicio.DaoProductoAlimenticio;
 import co.edu.poli.App.servicio.DaoProductoElectrico;
@@ -66,7 +36,7 @@ public class ControladorClienteFX {
     private DaoProductoAlimenticio controladorProductoAlimento;
     private DaoProductoElectrico controlaProductoElectrico;
     @FXML
-    private CheckBox CheckCertificacion;
+    private CheckBox CheckCertificacion, carritoVip;
 
     @FXML
     private CheckBox CheckEvaluacion;
@@ -435,6 +405,7 @@ public class ControladorClienteFX {
         FondoCarritoLabel.setVisible(mostrar);
         PuntosCheck.setVisible(mostrar);
         bttCarrito.setVisible(mostrar);
+        carritoVip.setVisible(mostrar);
 
     }
 
@@ -457,6 +428,9 @@ public class ControladorClienteFX {
             carritoConPuntos = new PuntosDeCompra(carrito);
             carrito = carritoConPuntos;
         }
+        if(carritoVip.isSelected()){
+            carrito = new CarritoVIP(carrito);
+        }
 
         // Crear mensaje
         StringBuilder mensaje = new StringBuilder();
@@ -474,6 +448,7 @@ public class ControladorClienteFX {
         alert.setTitle("Detalle del Carrito");
         alert.setContentText(mensaje.toString());
         alert.show();
+        alert.setHeaderText(null);
     }
     
 
