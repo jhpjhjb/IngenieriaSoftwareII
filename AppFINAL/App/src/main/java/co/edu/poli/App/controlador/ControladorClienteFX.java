@@ -5,13 +5,16 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JOptionPane;
 
+import co.edu.poli.App.modelo.CarritoBasico;
 import co.edu.poli.App.modelo.Certificacion;
 import co.edu.poli.App.modelo.Cliente;
 import co.edu.poli.App.modelo.Departamentos;
+import co.edu.poli.App.modelo.Descuento;
 import co.edu.poli.App.modelo.Destino;
 import co.edu.poli.App.modelo.DestinoInter;
 import co.edu.poli.App.modelo.DestinoNac;
 import co.edu.poli.App.modelo.Empleado;
+import co.edu.poli.App.modelo.EnvioGratis;
 import co.edu.poli.App.modelo.Evaluacion;
 import co.edu.poli.App.modelo.IGeneral;
 import co.edu.poli.App.modelo.IPagoExterno;
@@ -26,8 +29,13 @@ import co.edu.poli.App.modelo.PaypalAdapter;
 import co.edu.poli.App.modelo.PoliticaEntrega;
 import co.edu.poli.App.modelo.ProcesarPago;
 import co.edu.poli.App.modelo.Producto;
+import co.edu.poli.App.modelo.*;
 import co.edu.poli.App.modelo.ProductoElectrico;
 import co.edu.poli.App.modelo.Proveedor;
+import co.edu.poli.App.modelo.Carrito;
+import co.edu.poli.App.modelo.CarritoBasico;
+import co.edu.poli.App.modelo.CarritoDecorador;
+import co.edu.poli.App.modelo.PuntosDeCompra;
 import co.edu.poli.App.servicio.DaoCliente;
 import co.edu.poli.App.servicio.DaoProductoAlimenticio;
 import co.edu.poli.App.servicio.DaoProductoElectrico;
@@ -121,6 +129,26 @@ public class ControladorClienteFX {
 
     @FXML
     private RadioButton internacional,nacional, envioNorm,envioDoc,envioFragil;
+
+    @FXML
+    private Label CarritoLabel;
+
+    @FXML
+    private CheckBox DescuentoCheck;
+
+    @FXML
+    private CheckBox EnvioGratCheck;
+
+    @FXML
+    private Label FondoCarritoLabel;
+
+    @FXML
+    private CheckBox PuntosCheck;
+
+    @FXML
+    private Button bttCarrito;
+
+
 
 
     public ControladorClienteFX() throws ClassNotFoundException, SQLException {
@@ -401,7 +429,53 @@ public class ControladorClienteFX {
         bttBuild.setVisible(!mostrar);
         bttBridge.setVisible(!mostrar);
         composite.setVisible(!mostrar);
+        CarritoLabel.setVisible(mostrar);
+        DescuentoCheck.setVisible(mostrar);
+        EnvioGratCheck.setVisible(mostrar);
+        FondoCarritoLabel.setVisible(mostrar);
+        PuntosCheck.setVisible(mostrar);
+        bttCarrito.setVisible(mostrar);
+
     }
+
+    @FXML
+    void clickCrearDecorator(ActionEvent event) {
+        // Carrito base
+        Carrito carrito = new CarritoBasico(120000, 30000); // Precio base y envío
+        PuntosDeCompra carritoConPuntos = null;
+
+        // Aplicar decoradores según selección
+        if (DescuentoCheck.isSelected()) {
+            carrito = new Descuento(carrito, 20); // o valor configurable
+        }
+
+        if (EnvioGratCheck.isSelected()) { // ← ¡Esto antes usaba mal DescuentoCheck!
+            carrito = new EnvioGratis(carrito);
+        }
+
+        if (PuntosCheck.isSelected()) {
+            carritoConPuntos = new PuntosDeCompra(carrito);
+            carrito = carritoConPuntos;
+        }
+
+        // Crear mensaje
+        StringBuilder mensaje = new StringBuilder();
+        mensaje.append("Descripción: \n").append(carrito.getDescripcion()).append("\n");
+        mensaje.append("-------------------------------------------------------------\n");
+        mensaje.append("Costo total: $").append(String.format("%.2f", carrito.getCosto())).append("\n");
+
+        if (carritoConPuntos != null) {
+            mensaje.append("Puntos ganados: ").append(carritoConPuntos.getPuntos());
+        }
+        
+
+        // Mostrar en alerta
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Detalle del Carrito");
+        alert.setContentText(mensaje.toString());
+        alert.show();
+    }
+    
 
     @FXML
     void clickEnvio(ActionEvent event) {
