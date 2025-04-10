@@ -1,0 +1,110 @@
+
+.root {
+    -fx-background-color: linear-gradient(to bottom, #000000, #222222);
+    -fx-font-family: "Arial";
+}
+.titulo{
+    -fx-font-size: 40px !important;
+}
+
+.button{
+    -fx-background-color: linear-gradient(to bottom, #ffcc00, #ffaa00);
+    -fx-text-fill: black;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 0, 0.7), 10, 0, 0, 5);
+    -fx-transition: all 0.3s;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #ffdd44, #ffbb33);
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 0, 1), 15, 0, 0, 7);
+}
+
+.label {
+    -fx-text-fill: #ffcc00;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(one-pass-box, rgba(255, 204, 0, 0.8), 5, 0, 0, 2);
+}
+
+.text-field {
+    -fx-background-color: black;
+    -fx-text-fill: #ffcc00;
+    -fx-font-size: 14px;
+    -fx-border-color: #ffcc00;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.text-field:focused {
+    -fx-border-color: #ffdd44;
+    -fx-effect: dropshadow(three-pass-box, rgba(255, 204, 0, 0.9), 10, 0, 0, 5);
+}
+.radioBotones {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ffdd44;
+    -fx-font-size: 14px; 
+    -fx-font-weight: bold;
+    -fx-border-color: #ffaa00;
+    -fx-border-width: 2px;
+    -fx-border-radius: 50px;
+    -fx-padding: 5px 10px;
+    
+}
+
+.radioBotones:selected {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ffcc00;
+    -fx-border-color: #eeff00;
+    -fx-border-width: 2px;
+    -fx-border-radius: 50px;
+}
+
+.radioBotones:hover {
+    -fx-text-fill: #ffff;
+}
+.productos{
+    -fx-border-color: #eeff00;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+}
+
+.productoFerrari{
+    -fx-background-image: url("https://purepng.com/public/uploads/large/purepng.com-red-ferrari-laferrari-carcarferrarivehicletransport-961524666256ces49.png");
+    -fx-background-size: 140px 60px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-text-fill: #ffdd44;
+    -fx-font-size: 14px; 
+    -fx-font-weight: bold;
+    -fx-padding: 5px 10px;
+}
+
+.productoHelicoptero{
+    -fx-background-image: url("https://images.vexels.com/media/users/3/153724/isolated/preview/44ad4f1eb41d39367c981f64279773c0-icono-de-avion-helicoptero.png");
+    -fx-background-size: 140px 90px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-text-fill: #ffdd44;
+    -fx-font-size: 14px; 
+    -fx-font-weight: bold;
+    -fx-padding: 5px 10px;
+}
+.productoInvencible{
+    -fx-background-image: url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/474d848f-1446-4957-b1cf-381cb3b5f6b4/dgqplwk-06b889ff-4a15-4410-9dc2-64b1224630a0.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzQ3NGQ4NDhmLTE0NDYtNDk1Ny1iMWNmLTM4MWNiM2I1ZjZiNFwvZGdxcGx3ay0wNmI4ODlmZi00YTE1LTQ0MTAtOWRjMi02NGIxMjI0NjMwYTAucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.f2CAybv43gBTdyJTXEGvB7XQXf0H166k8Sm3g2f9GT0");
+    -fx-background-size: 90px 90px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-text-fill: #ffdd44;
+    -fx-font-size: 14px; 
+    -fx-font-weight: bold;
+    -fx-padding: 5px 10px;
+}
+

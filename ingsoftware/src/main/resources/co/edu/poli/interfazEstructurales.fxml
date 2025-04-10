@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="528.0" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.controlador.controladorUltimo">
+   <children>
+      <Label alignment="CENTER" layoutX="82.0" layoutY="34.0" prefHeight="70.0" prefWidth="364.0" styleClass="titulo" text="PATTERNS SUSA">
+         <font>
+            <Font size="70.0" />
+         </font>
+      </Label>
+      <Button layoutX="213.0" layoutY="142.0" mnemonicParsing="false" text="PROXY" />
+      <RadioButton fx:id="bttElon" layoutX="104.0" layoutY="206.0" mnemonicParsing="false" styleClass="radioBotones" text="Elon Musk" />
+      <RadioButton fx:id="bttPetro" layoutX="101.0" layoutY="247.0" mnemonicParsing="false" styleClass="radioBotones" text="Presidente" />
+      <RadioButton fx:id="bttSusa" layoutX="101.0" layoutY="287.0" mnemonicParsing="false" styleClass="radioBotones" text="Diego Susa" />
+      <CheckBox fx:id="bttFerrari" layoutX="249.0" layoutY="200.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="211.0" styleClass="productoFerrari, productos" />
+      <CheckBox fx:id="bttHelicoptero" layoutX="249.0" layoutY="247.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="211.0" styleClass="productoHelicoptero,productos" />
+      <CheckBox fx:id="bttInvencible" layoutX="250.0" layoutY="293.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="211.0" styleClass="productoInvencible,productos" />
+      <Button fx:id="bttdetallesProxy" layoutX="113.0" layoutY="331.0" mnemonicParsing="false" onAction="#mostrarProxy" text="Detalles" />
+   </children>
+</AnchorPane>
