@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-import co.edu.poli.modelo.ClienteFacade;
+import co.edu.poli.modelo.Facade;
+import co.edu.poli.modelo.Historial;
+import co.edu.poli.modelo.Producto;
 import co.edu.poli.modelo.Productos;
 import co.edu.poli.modelo.Proxy;
 import co.edu.poli.modelo.Ussers;
@@ -13,22 +15,30 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 
 
 public class controladorUltimo {
-    private ClienteFacade cliente;
+    private Facade cliente;
+    private Historial his = new Historial();
     private ToggleGroup grupo2;
     private ToggleGroup grupo;
     private boolean proxyActivo = false;
     private boolean facadeActivo = false;
+    private boolean flyweight = false;
     @FXML private RadioButton bttElon, bttPetro, bttSusa, paypalRadio, nequiRadio, daviplataRadio;
     @FXML private CheckBox bttFerrari, bttHelicoptero, bttInvencible;
-    @FXML private Button facadeButton, flyweightButton, bttProxy, bttdetallesProxy, activarBtt, actualizarBtt, bloquearBtt, hacerPedidoBtt, historialBtt, mostrarMetBtt, mostrarClienteBtt;
+    @FXML private Button facadeButton, flyweightButton, bttProxy, bttdetallesProxy, activarBtt, actualizarBtt, bloquearBtt, 
+    hacerPedidoBtt, historialBtt, mostrarMetBtt, mostrarClienteBtt, productosFlyBtt, crearProductoBtt;
     @FXML private AnchorPane anchorBalanza, anchorBarrera, anchorTemplo, metodoPagoAnchor;
+    @FXML private TextField nombreProductoTA, precioTA;
+    @FXML private Label productoLabel, precioLabel;
+
 
     @FXML
     public void initialize(){
@@ -63,6 +73,12 @@ public class controladorUltimo {
         nequiRadio.setVisible(false);
         daviplataRadio.setVisible(false);
         activarBtt.setVisible(false);
+        productoLabel.setVisible(false);
+        precioLabel.setVisible(false);
+        nombreProductoTA.setVisible(false);
+        precioTA.setVisible(false);
+        productosFlyBtt.setVisible(false);
+        crearProductoBtt.setVisible(false);
     }
 
     @FXML
@@ -109,7 +125,7 @@ public class controladorUltimo {
     @FXML
     void proxyClick(ActionEvent event) {
         if (!proxyActivo) {
-            bttProxy.setLayoutX(216);
+            bttProxy.setLayoutX(202);
             bttProxy.setLayoutY(120);
             flyweightButton.setVisible(false);
             facadeButton.setVisible(false);
@@ -147,7 +163,7 @@ public class controladorUltimo {
                     correo = correo.trim();
                 } while (correo.isEmpty());
 
-                cliente = new ClienteFacade(nombre, correo);
+                cliente = new Facade(nombre, correo);
                 JOptionPane.showMessageDialog(null, "Cliente creado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             }
 
@@ -177,12 +193,32 @@ public class controladorUltimo {
 
     @FXML
     void flyweightClick(ActionEvent event) {
-
+        if (!flyweight) {
+            flyweightButton.setLayoutX(216);
+            flyweightButton.setLayoutY(120);
+            productoLabel.setVisible(true);
+            precioLabel.setVisible(true);
+            nombreProductoTA.setVisible(true);
+            precioTA.setVisible(true);
+            productosFlyBtt.setVisible(true);
+            crearProductoBtt.setVisible(true);
+            facadeButton.setVisible(false);
+            bttProxy.setVisible(false);
+            anchorBalanza.setVisible(false);
+            anchorBarrera.setVisible(false);
+            anchorTemplo.setVisible(false);
+            
+            flyweight = true;
+        } else {
+            mostrarMenuPrincipal();
+        }
+       
     }
 
     private void mostrarMenuPrincipal() {
         proxyActivo = false;
         facadeActivo = false;
+        flyweight = false;
         facadeButton.setLayoutX(132);
         facadeButton.setLayoutY(133);
         bttProxy.setLayoutX(137);
@@ -214,6 +250,13 @@ public class controladorUltimo {
         nequiRadio.setVisible(false);
         daviplataRadio.setVisible(false);
         actualizarBtt.setVisible(false);
+        productoLabel.setVisible(false);
+        precioLabel.setVisible(false);
+        nombreProductoTA.setVisible(false);
+        precioLabel.setVisible(false);
+        crearProductoBtt.setVisible(false);
+        productosFlyBtt.setVisible(false);
+        precioTA.setVisible(false);
     }
 
     @FXML
@@ -296,6 +339,40 @@ public class controladorUltimo {
         String info = cliente.mostrarInformacion();
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Información del Cliente");
+        alert.setHeaderText(null);
+        alert.setContentText(info);
+        alert.showAndWait();
+    }
+
+    @FXML
+    void crearProductoBtt(ActionEvent event) {
+        String nombre = nombreProductoTA.getText().trim();
+        String precioTexto = precioTA.getText().trim();
+
+        if (nombre.isEmpty() || precioTexto.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, completa todos los campos", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        double precio;
+        try {
+            precio = Double.parseDouble(precioTexto);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "El precio debe ser un número válido", "Error de formato", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        Producto producto = new Producto(nombre, precio);
+        his.agregarProducto(producto);
+        JOptionPane.showMessageDialog(null, "Producto creado con éxito: \n"+ producto.toString(), "EXITO", JOptionPane.INFORMATION_MESSAGE);
+        nombreProductoTA.clear();
+        precioTA.clear();
+    }
+
+    @FXML
+    void productosFlyClick(ActionEvent event) {
+        String info = his.mostrarHistorialProducto();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Historial de Productos");
         alert.setHeaderText(null);
         alert.setContentText(info);
         alert.showAndWait();

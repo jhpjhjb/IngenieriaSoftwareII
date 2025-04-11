@@ -1,13 +1,13 @@
 package co.edu.poli.modelo;
 
-public class ClienteFacade {
+public class Facade {
     private InformacionPersonal infoP;
-    private HistorialPedidos historial;
+    private Historial historial;
     private FormasPago formasPago;
 
-    public ClienteFacade(String nombre, String correo) {
+    public Facade(String nombre, String correo) {
         this.infoP = new InformacionPersonal(nombre, correo);
-        this.historial = new HistorialPedidos();
+        this.historial = new Historial();
         this.formasPago = new FormasPago();
     }
 
@@ -38,5 +38,4 @@ public class ClienteFacade {
     public String verFormasDePago() {
         return formasPago.mostrarFormas();
     }
-
 }

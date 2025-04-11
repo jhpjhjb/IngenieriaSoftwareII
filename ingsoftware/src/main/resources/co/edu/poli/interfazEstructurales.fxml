@@ -5,6 +5,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -23,8 +24,8 @@
       <CheckBox fx:id="bttHelicoptero" layoutX="249.0" layoutY="223.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="211.0" styleClass="productoHelicoptero,productos" visible="false" />
       <CheckBox fx:id="bttInvencible" layoutX="249.0" layoutY="267.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="211.0" styleClass="productoInvencible,productos" visible="false" />
       <Button fx:id="bttdetallesProxy" layoutX="110.0" layoutY="303.0" mnemonicParsing="false" onAction="#mostrarProxy" text="Detalles" visible="false" />
-      <Button fx:id="facadeButton" layoutX="216.0" layoutY="120.0" mnemonicParsing="false" onAction="#facadeClick" text="FACADE" />
-      <Button fx:id="flyweightButton" layoutX="102.0" layoutY="291.0" mnemonicParsing="false" onAction="#flyweightClick" text="FLYWEIGHT" visible="false" />
+      <Button fx:id="facadeButton" layoutX="216.0" layoutY="120.0" mnemonicParsing="false" onAction="#facadeClick" text="FACADE" visible="false" />
+      <Button fx:id="flyweightButton" layoutX="202.0" layoutY="120.0" mnemonicParsing="false" onAction="#flyweightClick" text="FLYWEIGHT" />
       <AnchorPane fx:id="anchorTemplo" layoutX="266.0" layoutY="120.0" prefHeight="70.0" prefWidth="121.0" visible="false">
          <styleClass>
             <String fx:value="text-field" />
@@ -43,16 +44,22 @@
             <String fx:value="productoBalanza" />
          </styleClass>
       </AnchorPane>
-      <Button fx:id="mostrarClienteBtt" layoutX="153.0" layoutY="120.0" mnemonicParsing="false" onAction="#mostrarClienteClick" prefHeight="44.0" prefWidth="52.0" styleClass="productoPerfil" />
-      <Button fx:id="actualizarBtt" layoutX="31.0" layoutY="200.0" mnemonicParsing="false" onAction="#actualizarClick" prefHeight="44.0" prefWidth="174.0" text="ACTUALIZAR" />
-      <Button fx:id="hacerPedidoBtt" layoutX="31.0" layoutY="256.0" mnemonicParsing="false" onAction="#hacerPedidoClick" prefHeight="44.0" prefWidth="174.0" text="HACER PEDIDO" />
-      <Button fx:id="historialBtt" layoutX="31.0" layoutY="313.0" mnemonicParsing="false" onAction="#historialClick" prefHeight="44.0" prefWidth="174.0" text="HISTORIAL" />
-      <RadioButton fx:id="paypalRadio" layoutX="249.0" layoutY="209.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="68.0" text="Paypal" textFill="WHITE" />
-      <RadioButton fx:id="nequiRadio" layoutX="249.0" layoutY="240.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="68.0" text="Nequi" textFill="WHITE" />
-      <RadioButton fx:id="daviplataRadio" layoutX="249.0" layoutY="282.0" mnemonicParsing="false" text="Daviplata" textFill="WHITE" />
-      <Button fx:id="activarBtt" layoutX="241.0" layoutY="313.0" mnemonicParsing="false" onAction="#activarClick" prefHeight="33.0" prefWidth="126.0" text="ACTIVAR" />
-      <Button fx:id="bloquearBtt" layoutX="375.0" layoutY="313.0" mnemonicParsing="false" onAction="#bloquearClick" prefHeight="44.0" prefWidth="139.0" text="BLOQUEAR" />
-      <Button fx:id="mostrarMetBtt" layoutX="335.0" layoutY="120.0" mnemonicParsing="false" onAction="#monedaClick" prefHeight="44.0" prefWidth="52.0" styleClass="productoMoneda" />
-      <AnchorPane fx:id="metodoPagoAnchor" layoutX="347.0" layoutY="199.0" prefHeight="103.0" prefWidth="164.0" styleClass="productoMetodoPago" />
+      <Button fx:id="mostrarClienteBtt" layoutX="153.0" layoutY="120.0" mnemonicParsing="false" onAction="#mostrarClienteClick" prefHeight="44.0" prefWidth="52.0" styleClass="productoPerfil" visible="false" />
+      <Button fx:id="actualizarBtt" layoutX="31.0" layoutY="200.0" mnemonicParsing="false" onAction="#actualizarClick" prefHeight="44.0" prefWidth="174.0" text="ACTUALIZAR" visible="false" />
+      <Button fx:id="hacerPedidoBtt" layoutX="31.0" layoutY="256.0" mnemonicParsing="false" onAction="#hacerPedidoClick" prefHeight="44.0" prefWidth="174.0" text="HACER PEDIDO" visible="false" />
+      <Button fx:id="historialBtt" layoutX="31.0" layoutY="313.0" mnemonicParsing="false" onAction="#historialClick" prefHeight="44.0" prefWidth="174.0" text="HISTORIAL" visible="false" />
+      <RadioButton fx:id="paypalRadio" layoutX="249.0" layoutY="209.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="68.0" text="Paypal" textFill="WHITE" visible="false" />
+      <RadioButton fx:id="nequiRadio" layoutX="249.0" layoutY="240.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="68.0" text="Nequi" textFill="WHITE" visible="false" />
+      <RadioButton fx:id="daviplataRadio" layoutX="249.0" layoutY="282.0" mnemonicParsing="false" text="Daviplata" textFill="WHITE" visible="false" />
+      <Button fx:id="activarBtt" layoutX="241.0" layoutY="313.0" mnemonicParsing="false" onAction="#activarClick" prefHeight="33.0" prefWidth="126.0" text="ACTIVAR" visible="false" />
+      <Button fx:id="bloquearBtt" layoutX="375.0" layoutY="313.0" mnemonicParsing="false" onAction="#bloquearClick" prefHeight="44.0" prefWidth="139.0" text="BLOQUEAR" visible="false" />
+      <Button fx:id="mostrarMetBtt" layoutX="335.0" layoutY="120.0" mnemonicParsing="false" onAction="#monedaClick" prefHeight="44.0" prefWidth="52.0" styleClass="productoMoneda" visible="false" />
+      <AnchorPane fx:id="metodoPagoAnchor" layoutX="347.0" layoutY="199.0" prefHeight="103.0" prefWidth="164.0" styleClass="productoMetodoPago" visible="false" />
+      <TextField fx:id="nombreProductoTA" layoutX="268.0" layoutY="198.0" />
+      <TextField fx:id="precioTA" layoutX="268.0" layoutY="252.0" />
+      <Label fx:id="productoLabel" layoutX="123.0" layoutY="190.0" prefHeight="44.0" prefWidth="126.0" text="PRODUCTO:" />
+      <Label fx:id="precioLabel" layoutX="154.0" layoutY="258.0" prefHeight="21.0" prefWidth="90.0" text="PRECIO:" />
+      <Button fx:id="crearProductoBtt" layoutX="297.0" layoutY="303.0" mnemonicParsing="false" onAction="#crearProductoBtt" text="CREAR" />
+      <Button fx:id="productosFlyBtt" layoutX="129.0" layoutY="303.0" mnemonicParsing="false" onAction="#productosFlyClick" text="PRODUCTOS" />
    </children>
 </AnchorPane>
