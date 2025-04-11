@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
@@ -7,21 +8,51 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="528.0" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.controlador.controladorUltimo">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="528.0" styleClass="text-field" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.controlador.controladorUltimo">
    <children>
-      <Label alignment="CENTER" layoutX="82.0" layoutY="34.0" prefHeight="70.0" prefWidth="364.0" styleClass="titulo" text="PATTERNS SUSA">
+      <Label alignment="CENTER" layoutX="23.0" layoutY="34.0" prefHeight="70.0" prefWidth="483.0" styleClass="titulo" text="PATTERNS ALEJANDRA">
          <font>
             <Font size="70.0" />
          </font>
       </Label>
-      <Button layoutX="213.0" layoutY="142.0" mnemonicParsing="false" text="PROXY" />
-      <RadioButton fx:id="bttElon" layoutX="104.0" layoutY="206.0" mnemonicParsing="false" styleClass="radioBotones" text="Elon Musk" />
-      <RadioButton fx:id="bttPetro" layoutX="101.0" layoutY="247.0" mnemonicParsing="false" styleClass="radioBotones" text="Presidente" />
-      <RadioButton fx:id="bttSusa" layoutX="101.0" layoutY="287.0" mnemonicParsing="false" styleClass="radioBotones" text="Diego Susa" />
-      <CheckBox fx:id="bttFerrari" layoutX="249.0" layoutY="200.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="211.0" styleClass="productoFerrari, productos" />
-      <CheckBox fx:id="bttHelicoptero" layoutX="249.0" layoutY="247.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="211.0" styleClass="productoHelicoptero,productos" />
-      <CheckBox fx:id="bttInvencible" layoutX="250.0" layoutY="293.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="211.0" styleClass="productoInvencible,productos" />
-      <Button fx:id="bttdetallesProxy" layoutX="113.0" layoutY="331.0" mnemonicParsing="false" onAction="#mostrarProxy" text="Detalles" />
+      <Button fx:id="bttProxy" layoutX="216.0" layoutY="120.0" mnemonicParsing="false" onAction="#proxyClick" prefWidth="101.0" text="PROXY" visible="false" />
+      <RadioButton fx:id="bttElon" layoutX="102.0" layoutY="184.0" mnemonicParsing="false" styleClass="radioBotones" text="Elon Musk" visible="false" />
+      <RadioButton fx:id="bttPetro" layoutX="102.0" layoutY="222.0" mnemonicParsing="false" styleClass="radioBotones" text="Presidente" visible="false" />
+      <RadioButton fx:id="bttSusa" layoutX="100.0" layoutY="260.0" mnemonicParsing="false" styleClass="radioBotones" text="Diego Susa" visible="false" />
+      <CheckBox fx:id="bttFerrari" layoutX="249.0" layoutY="179.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="211.0" styleClass="productoFerrari, productos" visible="false" />
+      <CheckBox fx:id="bttHelicoptero" layoutX="249.0" layoutY="223.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="211.0" styleClass="productoHelicoptero,productos" visible="false" />
+      <CheckBox fx:id="bttInvencible" layoutX="249.0" layoutY="267.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="211.0" styleClass="productoInvencible,productos" visible="false" />
+      <Button fx:id="bttdetallesProxy" layoutX="110.0" layoutY="303.0" mnemonicParsing="false" onAction="#mostrarProxy" text="Detalles" visible="false" />
+      <Button fx:id="facadeButton" layoutX="216.0" layoutY="120.0" mnemonicParsing="false" onAction="#facadeClick" text="FACADE" />
+      <Button fx:id="flyweightButton" layoutX="102.0" layoutY="291.0" mnemonicParsing="false" onAction="#flyweightClick" text="FLYWEIGHT" visible="false" />
+      <AnchorPane fx:id="anchorTemplo" layoutX="266.0" layoutY="120.0" prefHeight="70.0" prefWidth="121.0" visible="false">
+         <styleClass>
+            <String fx:value="text-field" />
+            <String fx:value="productoTemplo" />
+         </styleClass>
+      </AnchorPane>
+      <AnchorPane fx:id="anchorBarrera" layoutX="265.0" layoutY="198.0" prefHeight="70.0" prefWidth="120.0" visible="false">
+         <styleClass>
+            <String fx:value="text-field" />
+            <String fx:value="productoBarrera" />
+         </styleClass>
+      </AnchorPane>
+      <AnchorPane fx:id="anchorBalanza" layoutX="263.0" layoutY="278.0" prefHeight="70.0" prefWidth="126.0" visible="false">
+         <styleClass>
+            <String fx:value="text-field" />
+            <String fx:value="productoBalanza" />
+         </styleClass>
+      </AnchorPane>
+      <Button fx:id="mostrarClienteBtt" layoutX="153.0" layoutY="120.0" mnemonicParsing="false" onAction="#mostrarClienteClick" prefHeight="44.0" prefWidth="52.0" styleClass="productoPerfil" />
+      <Button fx:id="actualizarBtt" layoutX="31.0" layoutY="200.0" mnemonicParsing="false" onAction="#actualizarClick" prefHeight="44.0" prefWidth="174.0" text="ACTUALIZAR" />
+      <Button fx:id="hacerPedidoBtt" layoutX="31.0" layoutY="256.0" mnemonicParsing="false" onAction="#hacerPedidoClick" prefHeight="44.0" prefWidth="174.0" text="HACER PEDIDO" />
+      <Button fx:id="historialBtt" layoutX="31.0" layoutY="313.0" mnemonicParsing="false" onAction="#historialClick" prefHeight="44.0" prefWidth="174.0" text="HISTORIAL" />
+      <RadioButton fx:id="paypalRadio" layoutX="249.0" layoutY="209.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="68.0" text="Paypal" textFill="WHITE" />
+      <RadioButton fx:id="nequiRadio" layoutX="249.0" layoutY="240.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="68.0" text="Nequi" textFill="WHITE" />
+      <RadioButton fx:id="daviplataRadio" layoutX="249.0" layoutY="282.0" mnemonicParsing="false" text="Daviplata" textFill="WHITE" />
+      <Button fx:id="activarBtt" layoutX="241.0" layoutY="313.0" mnemonicParsing="false" onAction="#activarClick" prefHeight="33.0" prefWidth="126.0" text="ACTIVAR" />
+      <Button fx:id="bloquearBtt" layoutX="375.0" layoutY="313.0" mnemonicParsing="false" onAction="#bloquearClick" prefHeight="44.0" prefWidth="139.0" text="BLOQUEAR" />
+      <Button fx:id="mostrarMetBtt" layoutX="335.0" layoutY="120.0" mnemonicParsing="false" onAction="#monedaClick" prefHeight="44.0" prefWidth="52.0" styleClass="productoMoneda" />
+      <AnchorPane fx:id="metodoPagoAnchor" layoutX="347.0" layoutY="199.0" prefHeight="103.0" prefWidth="164.0" styleClass="productoMetodoPago" />
    </children>
 </AnchorPane>

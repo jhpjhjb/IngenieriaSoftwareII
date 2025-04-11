@@ -108,3 +108,69 @@
     -fx-padding: 5px 10px;
 }
 
+.productoTemplo{
+    -fx-background-image: url("https://cdn-icons-png.flaticon.com/512/5234/5234710.png");
+    -fx-background-size: 70px 70px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-text-fill: #ffdd44;
+    -fx-font-size: 14px; 
+    -fx-font-weight: bold;
+    -fx-padding: 5px 10px;
+}
+
+.productoBarrera{
+    -fx-background-image: url("https://cdn-icons-png.flaticon.com/512/1255/1255863.png");
+    -fx-background-size: 70px 70px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-text-fill: #ffdd44;
+    -fx-font-size: 14px; 
+    -fx-font-weight: bold;
+    -fx-padding: 5px 10px;
+}
+
+.productoBalanza{
+    -fx-background-image: url("https://static.vecteezy.com/system/resources/previews/024/091/946/non_2x/justice-golden-balance-free-png.png");
+    -fx-background-size: 70px 70px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-text-fill: #ffdd44;
+    -fx-font-size: 14px; 
+    -fx-font-weight: bold;
+    -fx-padding: 5px 10px;
+}
+
+.productoMetodoPago{
+    -fx-background-image: url("https://cdn-icons-png.flaticon.com/512/4564/4564998.png");
+    -fx-background-size: 120px 120px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-text-fill: #ffdd44;
+    -fx-font-size: 14px; 
+    -fx-font-weight: bold;
+    -fx-padding: 5px 10px;
+}
+
+.productoPerfil{
+    -fx-background-image: url("https://static.vecteezy.com/system/resources/previews/020/911/730/non_2x/profile-icon-avatar-icon-user-icon-person-icon-free-png.png");
+    -fx-background-size: 50px 50px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-text-fill: #ffdd44;
+    -fx-font-size: 14px; 
+    -fx-font-weight: bold;
+    -fx-padding: 5px 10px;
+}
+
+.productoMoneda{
+    -fx-background-image: url("https://static.vecteezy.com/system/resources/previews/029/145/652/non_2x/3d-illustration-of-blue-coin-free-png.png");
+    -fx-background-size: 35px 35px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-text-fill: #ffdd44;
+    -fx-font-size: 14px; 
+    -fx-font-weight: bold;
+    -fx-padding: 5px 10px;
+}
+
