@@ -16,6 +16,8 @@ public class InformacionPersonal {
         return "Informacion actualizada";
     }
 
+    
+
     public String mostrar() {
         return "--InformacionPersonal-- \nNombre: " + nombre + "\nCorreo: " + correo;
     }

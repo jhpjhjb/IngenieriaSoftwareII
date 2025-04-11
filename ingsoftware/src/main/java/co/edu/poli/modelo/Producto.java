@@ -8,7 +8,7 @@ public class Producto {
     public Producto(String nombre, double precio) {
         this.nombre = nombre;
         this.precio = precio;
-        this.proveedor = Proveedor.getInstancia(); 
+        this.proveedor = ProveedorFactory.obtenerProveedor("Paulis Shop");; 
     }
 
     @Override
