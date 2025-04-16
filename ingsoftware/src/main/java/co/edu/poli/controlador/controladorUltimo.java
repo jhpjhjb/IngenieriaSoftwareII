@@ -2,10 +2,13 @@ package co.edu.poli.controlador;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JOptionPane;
 
 import co.edu.poli.modelo.Facade;
+import co.edu.poli.modelo.FormasPago;
 import co.edu.poli.modelo.Historial;
+import co.edu.poli.modelo.InformacionPersonal;
 import co.edu.poli.modelo.Producto;
 import co.edu.poli.modelo.Productos;
 import co.edu.poli.modelo.Proxy;
@@ -13,31 +16,44 @@ import co.edu.poli.modelo.Ussers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 
 
 public class controladorUltimo {
-    private Facade cliente;
-    private Historial his = new Historial();
+    private String accionSeleccionada = null;
+    private Facade facade;
+    private Historial historia = new Historial();
+    private FormasPago formasPago = new FormasPago();
+    private InformacionPersonal infoP;
     private ToggleGroup grupo2;
     private ToggleGroup grupo;
+    
     private boolean proxyActivo = false;
     private boolean facadeActivo = false;
     private boolean flyweight = false;
     @FXML private RadioButton bttElon, bttPetro, bttSusa, paypalRadio, nequiRadio, daviplataRadio;
+
     @FXML private CheckBox bttFerrari, bttHelicoptero, bttInvencible;
-    @FXML private Button facadeButton, flyweightButton, bttProxy, bttdetallesProxy, activarBtt, actualizarBtt, bloquearBtt, 
-    hacerPedidoBtt, historialBtt, mostrarMetBtt, mostrarClienteBtt, productosFlyBtt, crearProductoBtt;
+
+    @FXML private Button flyweightButton, bttProxy, bttdetallesProxy, crearProductoBtt, productosFlyBtt,
+                         // Facade 
+                         facadeButton, gestionarBtt, bloquearBtt, activarBtt, historialBtt, mostrarMetBtt;
+
     @FXML private AnchorPane anchorBalanza, anchorBarrera, anchorTemplo, metodoPagoAnchor;
     @FXML private TextField nombreProductoTA, precioTA;
     @FXML private Label productoLabel, precioLabel;
+
+
 
 
     @FXML
@@ -62,10 +78,9 @@ public class controladorUltimo {
         bttPetro.setVisible(false);
         bttSusa.setVisible(false);
         bttdetallesProxy.setVisible(false);
-        mostrarClienteBtt.setVisible(false);
         mostrarMetBtt.setVisible(false);
         activarBtt.setVisible(false);
-        hacerPedidoBtt.setVisible(false);
+
         historialBtt.setVisible(false);
         bloquearBtt.setVisible(false);
         metodoPagoAnchor.setVisible(false);
@@ -110,7 +125,7 @@ public class controladorUltimo {
         }
     }
 
-        private void mostrarAlerta(String titulo, String contenido) {
+    private void mostrarAlerta(String titulo, String contenido) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
@@ -147,35 +162,14 @@ public class controladorUltimo {
 
     @FXML
     void facadeClick(ActionEvent event) {
-        if (!facadeActivo) {
-            if (cliente == null) {
-                String nombre = null;
-                do {
-                    nombre = JOptionPane.showInputDialog(null, "Ingrese su nombre:", "Datos del cliente", JOptionPane.QUESTION_MESSAGE);
-                    if (nombre == null) return;
-                    nombre = nombre.trim();
-                } while (nombre.isEmpty());
-
-                String correo = null;
-                do {
-                    correo = JOptionPane.showInputDialog(null, "Ingrese su correo:", "Datos del cliente", JOptionPane.QUESTION_MESSAGE);
-                    if (correo == null) return;
-                    correo = correo.trim();
-                } while (correo.isEmpty());
-
-                cliente = new Facade(nombre, correo);
-                JOptionPane.showMessageDialog(null, "Cliente creado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            }
-
+        if(!facadeActivo){
             bttProxy.setVisible(false);
             flyweightButton.setVisible(false);
             anchorBalanza.setVisible(false);
             anchorBarrera.setVisible(false);
             anchorTemplo.setVisible(false);
-            mostrarClienteBtt.setVisible(true);
             mostrarMetBtt.setVisible(true);
             activarBtt.setVisible(true);
-            hacerPedidoBtt.setVisible(true);
             historialBtt.setVisible(true);
             bloquearBtt.setVisible(true);
             metodoPagoAnchor.setVisible(true);
@@ -184,7 +178,8 @@ public class controladorUltimo {
             daviplataRadio.setVisible(true);
             facadeButton.setLayoutX(216);
             facadeButton.setLayoutY(120);
-            actualizarBtt.setVisible(true);
+            // Facade
+            gestionarBtt.setVisible(true);
             facadeActivo = true;
         } else {
             mostrarMenuPrincipal();
@@ -238,10 +233,8 @@ public class controladorUltimo {
         facadeButton.setVisible(true);
         flyweightButton.setVisible(true);
         bttProxy.setVisible(true);
-        mostrarClienteBtt.setVisible(false);
         mostrarMetBtt.setVisible(false);
         activarBtt.setVisible(false);
-        hacerPedidoBtt.setVisible(false);
         historialBtt.setVisible(false);
         activarBtt.setVisible(false);
         bloquearBtt.setVisible(false);
@@ -249,7 +242,7 @@ public class controladorUltimo {
         paypalRadio.setVisible(false);
         nequiRadio.setVisible(false);
         daviplataRadio.setVisible(false);
-        actualizarBtt.setVisible(false);
+        gestionarBtt.setVisible(false);
         productoLabel.setVisible(false);
         precioLabel.setVisible(false);
         nombreProductoTA.setVisible(false);
@@ -260,89 +253,86 @@ public class controladorUltimo {
     }
 
     @FXML
-    void actualizarClick(ActionEvent event) {
-        String nombre = null;
-        do {
-            nombre = JOptionPane.showInputDialog(null, "Ingrese su nombre:", "Datos del cliente", JOptionPane.QUESTION_MESSAGE);
-            if (nombre == null) return; 
-            nombre = nombre.trim();
-        } while (nombre.isEmpty());
+    void gestionarClick(ActionEvent event) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Actualizar Cliente");
+        dialog.setHeaderText("Ingrese su nombre");
+        dialog.setContentText("Nombre:");
 
-        String correo = null;
-        do {
-            correo = JOptionPane.showInputDialog(null, "Ingrese su correo:", "Datos del cliente", JOptionPane.QUESTION_MESSAGE);
-            if (correo == null) return;
-            correo = correo.trim();
-        } while (correo.isEmpty());
+        String nombre = dialog.showAndWait().orElse("");
+        if (nombre.isEmpty()) return;
 
-        cliente.actualizarInformacion(nombre, correo);
-        JOptionPane.showMessageDialog(null, "Cliente actualizado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        dialog.getEditor().clear();
+        dialog.setHeaderText("Ingrese su correo");
+        dialog.setContentText("Correo: ");
+
+        String correo = dialog.showAndWait().orElse("");
+        if (correo.isEmpty()) return;
+
+        infoP = new InformacionPersonal(nombre, correo);
+
+        facade = new Facade(infoP, historia, formasPago);
+        mostrarAlerta("Cliente", facade.actualizarInformacion(nombre, correo));
     }
 
     @FXML
     void activarClick(ActionEvent event) {
-        if (grupo2.getSelectedToggle() != null) {
-            String metodo = ((RadioButton) grupo2.getSelectedToggle()).getText();
-            cliente.activarPago(metodo);
-            JOptionPane.showMessageDialog(null, "Método activado: " + metodo);
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecciona un método de pago primero", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        accionSeleccionada = "activar";
+        activarBtt.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+        bloquearBtt.setStyle("");
     }
 
     @FXML
     void bloquearClick(ActionEvent event) {
-        if (grupo2.getSelectedToggle() != null) {
-            String metodo = ((RadioButton) grupo2.getSelectedToggle()).getText();
-            cliente.bloquearPago(metodo);
-            JOptionPane.showMessageDialog(null, "Método bloqueado: " + metodo);
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecciona un método de pago primero", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    @FXML
-    void hacerPedidoClick(ActionEvent event) {
-        String producto = null;
-        do {
-            producto = JOptionPane.showInputDialog(null, "Ingrese su producto:", "Datos del cliente", JOptionPane.QUESTION_MESSAGE);
-            if (producto == null) return;
-            producto = producto.trim();
-        } while (producto.isEmpty());
-
-        cliente.ingresarPedidos(producto);
-        JOptionPane.showMessageDialog(null, "Producto ingresado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        accionSeleccionada = "bloquear";
+        bloquearBtt.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+        activarBtt.setStyle("");
     }
 
     @FXML
     void historialClick(ActionEvent event) {
-        String info = cliente.verHistorialPedidos();
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Historial de pedidos");
-        alert.setHeaderText(null);
-        alert.setContentText(info);
-        alert.showAndWait();
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Actualizar Cliente");
+        dialog.setHeaderText("Ingrese su pedido");
+        dialog.setContentText("Pedido:");
+
+        String pedido = dialog.showAndWait().orElse("");
+        if (pedido.isEmpty()) return;
+
+        facade = new Facade(infoP, historia, formasPago);
+        mostrarAlerta("Hsitorial Pedido", facade.consultarPedidos(pedido));
     }
 
     @FXML
     void monedaClick(ActionEvent event) {
-        String info = cliente.verFormasDePago();
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Metodos de Pago");
-        alert.setHeaderText(null);
-        alert.setContentText(info);
-        alert.showAndWait();
+        Toggle metodoPagoSeleccionado = grupo2.getSelectedToggle();
+        facade = new Facade(infoP, historia, formasPago);
+        
+        if (metodoPagoSeleccionado == null || accionSeleccionada == null){
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Advertencia");
+            alert.setHeaderText(null);
+            alert.setContentText("Debe seleccionar un método de pago y una acción (activar o bloquear).");
+            alert.showAndWait();
+            return;
+        }
+
+        RadioButton metodoPago = (RadioButton) metodoPagoSeleccionado;
+        String metodo = metodoPago.getText();
+
+        if (accionSeleccionada.equals("activar")) {
+            mostrarAlerta("Metodos de Pago:", facade.accionPago(accionSeleccionada, metodo));
+            grupo2.selectToggle(null);
+            accionSeleccionada = null;
+            activarBtt.setStyle("");
+        } else if (accionSeleccionada.equals("bloquear")) {
+            mostrarAlerta("Metodos de Pago:", facade.accionPago(accionSeleccionada, metodo));
+            grupo2.selectToggle(null);
+            accionSeleccionada = null;
+            bloquearBtt.setStyle("");
+        }
     }
 
-    @FXML
-    void mostrarClienteClick(ActionEvent event) {
-        String info = cliente.mostrarInformacion();
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Información del Cliente");
-        alert.setHeaderText(null);
-        alert.setContentText(info);
-        alert.showAndWait();
-    }
 
     @FXML
     void crearProductoBtt(ActionEvent event) {
@@ -350,7 +340,11 @@ public class controladorUltimo {
         String precioTexto = precioTA.getText().trim();
 
         if (nombre.isEmpty() || precioTexto.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Por favor, completa todos los campos", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Advertencia");
+            alert.setHeaderText(null);
+            alert.setContentText("Por favor, completa todos los campos vacios");
+            alert.showAndWait();            
             return;
         }
 
@@ -358,24 +352,22 @@ public class controladorUltimo {
         try {
             precio = Double.parseDouble(precioTexto);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "El precio debe ser un número válido", "Error de formato", JOptionPane.ERROR_MESSAGE);
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Advertencia");
+            alert.setHeaderText(null);
+            alert.setContentText("El precio debe ser un número valido");
+            alert.showAndWait();  
             return;
         }
-        Producto producto = new Producto(nombre, precio);
-        his.agregarProducto(producto);
-        JOptionPane.showMessageDialog(null, "Producto creado con éxito: \n"+ producto.toString(), "EXITO", JOptionPane.INFORMATION_MESSAGE);
+        Producto producto = new Producto(nombre, precio, "Paulis Shop");
+        historia.agregarProducto(producto);
+        mostrarAlerta("EXITO", "Producto creado de manera exitosa");
         nombreProductoTA.clear();
         precioTA.clear();
     }
 
     @FXML
     void productosFlyClick(ActionEvent event) {
-        String info = his.mostrarHistorialProducto();
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Historial de Productos");
-        alert.setHeaderText(null);
-        alert.setContentText(info);
-        alert.showAndWait();
+        mostrarAlerta("Historial de Productos", historia.mostrarHistorialProducto());
     }
-
 }

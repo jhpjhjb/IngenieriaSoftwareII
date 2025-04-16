@@ -5,10 +5,10 @@ public class Producto {
     private double precio;
     private Proveedor proveedor;
 
-    public Producto(String nombre, double precio) {
+    public Producto(String nombre, double precio, String proveedor) {
         this.nombre = nombre;
         this.precio = precio;
-        this.proveedor = ProveedorFactory.obtenerProveedor("Paulis Shop");; 
+        this.proveedor = ProveedorFactory.obtenerProveedor(proveedor);; 
     }
 
     @Override

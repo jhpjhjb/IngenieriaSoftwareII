@@ -19,6 +19,6 @@ public class InformacionPersonal {
     
 
     public String mostrar() {
-        return "--InformacionPersonal-- \nNombre: " + nombre + "\nCorreo: " + correo;
+        return "--Informacion Personal-- \nNombre: " + nombre + "\nCorreo: " + correo;
     }
 }

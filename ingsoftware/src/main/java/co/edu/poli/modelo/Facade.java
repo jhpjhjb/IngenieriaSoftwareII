@@ -5,37 +5,33 @@ public class Facade {
     private Historial historial;
     private FormasPago formasPago;
 
-    public Facade(String nombre, String correo) {
-        this.infoP = new InformacionPersonal(nombre, correo);
-        this.historial = new Historial();
-        this.formasPago = new FormasPago();
+    public Facade(InformacionPersonal infoP, Historial historial, FormasPago formasPago) {
+        this.infoP = infoP;
+        this.historial = historial;
+        this.formasPago = formasPago;
     }
 
-    public void actualizarInformacion(String nombre, String correo){
+    public String actualizarInformacion(String nombre, String correo){
         infoP.actualizarDatos(nombre, correo);
-    }
-    
-    public String mostrarInformacion(){
-        return infoP.mostrar();
+        String clienteActual = infoP.mostrar();
+        return clienteActual;
     }
 
-    public void ingresarPedidos(String pedido) {
+
+    public String consultarPedidos(String pedido) {
         historial.realizarPedido(pedido);
+        String historialDespues = historial.mostrarHistorial();
+        return historialDespues;
     }
 
-    public String verHistorialPedidos() {
-        return historial.mostrarHistorial();
-    }
-
-    public void activarPago(String tipo) {
-        formasPago.activarForma(tipo);
-    }
-
-    public void bloquearPago(String tipo) {
-        formasPago.bloquearForma(tipo);
-    }
-
-    public String verFormasDePago() {
-        return formasPago.mostrarFormas();
+    public String accionPago(String accion, String metodoPago) {
+        if (accion.equals("activar")) {
+            formasPago.activarForma(metodoPago);
+            return formasPago.mostrarFormas();
+        } else if (accion.equals("bloquear")) {
+            formasPago.bloquearForma(metodoPago);
+            return formasPago.mostrarFormas();
+        }
+        return "Accion no reconocida: "+ accion;
     }
 }
