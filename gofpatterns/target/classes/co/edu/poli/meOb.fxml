@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.controlador.controladorPat">
+   <children>
+      <Button fx:id="patronMemento" layoutX="63.0" layoutY="143.0" mnemonicParsing="false" onAction="#clickMemento" text="Patron Memento" />
+      <Button fx:id="patronObserver" layoutX="383.0" layoutY="144.0" mnemonicParsing="false" onAction="#clickObserver" text="Patron Observer" />
+      <Label alignment="CENTER" layoutX="136.0" layoutY="64.0" prefHeight="47.0" prefWidth="338.0" styleClass="titulo" text="Atom Eve Shop!" />
+   </children>
+</AnchorPane>
