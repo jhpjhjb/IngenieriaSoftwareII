@@ -11,9 +11,10 @@ import javafx.scene.layout.GridPane;
 
 public class controladorPat {
     private boolean mostrar = true;
-    private TipoEnum tipo;
+    private AjustadorPrecios.TipoEnum tipo;
     private AjustadorPrecios ajustador = new AjustadorPrecios();
-    private Producto productoActual = new Producto(2024, "Burger", 1500);
+    private Producto productoActual = new Producto(2024, "Burguer", 1500);
+    private Producto productoNuevo = new Producto(2025, "Hot Dog", 1200);
     private ToggleGroup grupo = new ToggleGroup();
     private Historial historial = new Historial();
 
@@ -21,10 +22,10 @@ public class controladorPat {
     @FXML private Button BttGuadrar;
     @FXML private Button BttHistorial;
     @FXML private TextField TextFieldAnno;
-    @FXML private TextField TextFieldNombre;
+    @FXML private TextField TextFieldNombre, productoEliminar;
     @FXML private TextField TextFieldPrecio;
     @FXML private AnchorPane contenedorObser;
-    @FXML private Button bttMas;
+    @FXML private Button bttMas,bttUnsus;
     @FXML private Button bttMenos;
     @FXML private RadioButton desc10;
     @FXML private RadioButton desc15;
@@ -38,8 +39,6 @@ public class controladorPat {
 
     @FXML
     public void initialize() {
-        
-         
         grupo.getToggles().add(desc10);
         grupo.getToggles().add(desc25);
         grupo.getToggles().add(desc50);
@@ -50,6 +49,7 @@ public class controladorPat {
         desc25.setUserData(25);
         desc50.setUserData(50);
         ajustador.attach(productoActual);
+        ajustador.attach(productoNuevo);
         
         // Inicializar campos con valores del producto actual
         TextFieldAnno.setText(String.valueOf(productoActual.getAño()));
@@ -59,28 +59,28 @@ public class controladorPat {
 
     @FXML
     void clickMas(ActionEvent event) {
-        tipo = TipoEnum.REDUCIR;
+        tipo = AjustadorPrecios.TipoEnum.REDUCIR;
         ajustarPrecios(tipo);
     }
 
     @FXML
     void clickMenos(ActionEvent event) {
-        tipo = TipoEnum.INCREMENTAR;
+        tipo = AjustadorPrecios.TipoEnum.INCREMENTAR;
         ajustarPrecios(tipo);
     }
 
-    public void ajustarPrecios(TipoEnum tipo) {
-        String anterior = "Producto sin Variacion de " + (tipo.equals(TipoEnum.INCREMENTAR) ? "Aumento" : "Reduccion") + "\n" + productoActual.toString();
+    public void ajustarPrecios(AjustadorPrecios.TipoEnum tipo) {
+        String anterior = "Productos sin Variacion de " + (tipo.equals(AjustadorPrecios.TipoEnum.INCREMENTAR) ? "Aumento" : "Reduccion") + "\n" + ajustador.devolverLista();
 
         if (grupo.getSelectedToggle() != null) {
             int porcentaje = (int) grupo.getSelectedToggle().getUserData();
             ajustador.setPorcentaje(porcentaje, tipo);
-            mostrarAlerta(anterior + "\nDescuento " + porcentaje + "% " + (tipo.equals(TipoEnum.INCREMENTAR) ? "Sumado" : "Restado") + " a Todos los Productos\n" + productoActual.toString(), AlertType.INFORMATION);
+            mostrarAlerta(anterior + "\nDescuento " + porcentaje + "% " + (tipo.equals(AjustadorPrecios.TipoEnum.INCREMENTAR) ? "Sumado" : "Restado") + " a Todos los Productos\n" + ajustador.devolverLista(), AlertType.INFORMATION);
         } else if (!otroValor.getText().isEmpty()) {
             try {
                 int porcentaje = Integer.parseInt(otroValor.getText());
                 ajustador.setPorcentaje(porcentaje, tipo);
-                mostrarAlerta(anterior + "\nDescuento " + porcentaje + "% " + (tipo.equals(TipoEnum.INCREMENTAR) ? "Sumado" : "Restado") + " a Todos los Productos\n" + productoActual.toString(), AlertType.INFORMATION);
+                mostrarAlerta(anterior + "\nDescuento " + porcentaje + "% " + (tipo.equals(AjustadorPrecios.TipoEnum.INCREMENTAR) ? "Sumado" : "Restado") + " a Todos los Productos\n" + ajustador.devolverLista(),AlertType.INFORMATION);
             } catch (NumberFormatException e) {
                 mostrarAlerta("Porcentaje ingresado no es válido", AlertType.ERROR);
             }
@@ -191,4 +191,20 @@ public class controladorPat {
     void clickOtroValor(MouseEvent event) {
         grupo.selectToggle(null);
     }
+
+
+    @FXML
+    void clickDesuscribir(ActionEvent event) {
+        if(!productoEliminar.getText().trim().isEmpty()){
+            var lista = ajustador.devolverLista();
+                for (IObserver iObserver : lista) {
+                    if(((Producto) iObserver).getNombre().equals(productoEliminar.getText())){
+                        ajustador.dettach(iObserver);
+                        break;
+                    }
+                }
+                mostrarAlerta("Producto Eliminado Con Exito\n" + ajustador.listaRecorrida(), AlertType.INFORMATION);
+        }
+    }
+
 }

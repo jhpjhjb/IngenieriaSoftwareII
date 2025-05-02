@@ -7,12 +7,12 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="421.0" prefWidth="600.0" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.controlador.controladorPat">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="538.0" prefWidth="600.0" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.controlador.controladorPat">
    <children>
       <Button fx:id="patronMemento" layoutX="63.0" layoutY="143.0" mnemonicParsing="false" onAction="#clickMemento" text="Patron Memento" />
       <Button fx:id="patronObserver" layoutX="383.0" layoutY="144.0" mnemonicParsing="false" onAction="#clickObserver" text="Patron Observer" />
       <Label alignment="CENTER" layoutX="136.0" layoutY="64.0" prefHeight="47.0" prefWidth="338.0" styleClass="titulo" text="Atom Eve Shop!" />
-      <AnchorPane fx:id="contenedorObser" layoutX="369.0" layoutY="196.0" prefHeight="197.0" prefWidth="214.0" visible="false">
+      <AnchorPane fx:id="contenedorObser" layoutX="369.0" layoutY="196.0" prefHeight="325.0" prefWidth="214.0" visible="false">
          <children>
             <Label layoutY="5.0" text="Descuento %" />
             <RadioButton fx:id="desc10" layoutX="114.0" layoutY="34.0" mnemonicParsing="false" styleClass="radioBotones" text="10%" />
@@ -26,6 +26,12 @@
             </TextField>
             <Button fx:id="bttMas" layoutX="40.0" layoutY="149.0" mnemonicParsing="false" onAction="#clickMas" prefHeight="44.0" prefWidth="54.0" text="+" />
             <Button fx:id="bttMenos" layoutX="125.0" layoutY="149.0" mnemonicParsing="false" onAction="#clickMenos" prefHeight="44.0" prefWidth="54.0" text="-" />
+            <Button fx:id="bttUnsus" layoutX="27.0" layoutY="259.0" mnemonicParsing="false" onAction="#clickDesuscribir" prefHeight="44.0" prefWidth="162.0" text="UNSUSCRIBE" />
+            <TextField fx:id="productoEliminar" alignment="CENTER" layoutX="22.0" layoutY="213.0" onMouseClicked="#clickOtroValor" promptText="Producto a Eliminar">
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+            </TextField>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="contenedorMem" layoutX="21.0" layoutY="207.0" prefHeight="200.0" prefWidth="314.0" visible="false">

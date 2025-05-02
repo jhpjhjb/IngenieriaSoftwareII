@@ -28,9 +28,26 @@ public class AjustadorPrecios implements IObservable {
     }
 
     @Override
-    public void notify(TipoEnum tipo) {
+    public void notify(AjustadorPrecios.TipoEnum tipo) {
         for (IObserver iObserver : suscrip) {
             iObserver.update(this, tipo);
         }
+    }
+
+    public enum TipoEnum{
+        INCREMENTAR,
+        REDUCIR
+    }
+
+    public List<IObserver> devolverLista(){
+        return this.suscrip;
+    }
+
+    public String listaRecorrida(){
+        String objetos="";
+        for (IObserver iObserver : suscrip) {
+            objetos += iObserver.toString() + "\n";
+        }
+        return objetos;
     }
 }

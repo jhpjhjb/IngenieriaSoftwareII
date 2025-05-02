@@ -45,12 +45,12 @@ public class Producto implements IObserver{
     }
 
     @Override
-    public void update(AjustadorPrecios porcentaje, TipoEnum implicacion) {
+    public void update(AjustadorPrecios porcentaje, AjustadorPrecios.TipoEnum implicacion) {
         int valor = porcentaje.getPorcentaje();
-        if(implicacion==TipoEnum.INCREMENTAR){
+        if(implicacion==AjustadorPrecios.TipoEnum.INCREMENTAR){
             precio+=(precio*valor)/100;
         }
-        else if (implicacion == TipoEnum.REDUCIR){
+        else if (implicacion == AjustadorPrecios.TipoEnum.REDUCIR){
             precio-=(precio*valor)/100;
         }
     }
