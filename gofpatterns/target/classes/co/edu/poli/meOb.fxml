@@ -28,5 +28,14 @@
             <Button fx:id="bttMenos" layoutX="125.0" layoutY="149.0" mnemonicParsing="false" onAction="#clickMenos" prefHeight="44.0" prefWidth="54.0" text="-" />
          </children>
       </AnchorPane>
+      <AnchorPane fx:id="contenedorMem" layoutX="21.0" layoutY="207.0" prefHeight="200.0" prefWidth="314.0" visible="false">
+         <children>
+            <Button fx:id="BttHistorial" layoutX="14.0" layoutY="142.0" mnemonicParsing="false" onAction="#mostrarHistorial" text="Historial" />
+            <Button fx:id="BttGuadrar" layoutX="150.0" layoutY="142.0" mnemonicParsing="false" onAction="#guardarProducto" text="Guardar" />
+            <TextField fx:id="TextFieldNombre" layoutX="37.0" layoutY="10.0" promptText="Nombre" />
+            <TextField fx:id="TextFieldAnno" layoutX="37.0" layoutY="54.0" promptText="Año" />
+            <TextField fx:id="TextFieldPrecio" layoutX="37.0" layoutY="97.0" promptText="Precio" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
