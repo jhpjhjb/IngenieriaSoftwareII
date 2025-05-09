@@ -4,9 +4,10 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="545.0" prefWidth="600.0" stylesheets="@estilos.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.controlador.controladorPatrones">
    <children>
@@ -26,6 +27,21 @@
             <Button fx:id="bttAñadir" layoutX="202.0" layoutY="222.0" mnemonicParsing="false" onAction="#clickAñadir" text="+" />
             <Separator layoutX="8.0" layoutY="303.0" prefHeight="8.0" prefWidth="254.0" style="-fx-background-color: orange;" />
             <Button fx:id="bttCambiar" layoutX="80.0" layoutY="98.0" mnemonicParsing="false" onAction="#clickCambiar" text="Cambiar" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="contenedorSrategy" layoutX="197.0" layoutY="134.0" prefHeight="392.0" prefWidth="385.0" visible="false">
+         <children>
+            <TableView fx:id="tableViewProductos" layoutX="93.0" layoutY="14.0" prefHeight="258.0" prefWidth="286.0">
+              <columns>
+                <TableColumn fx:id="descripcionColumn" prefWidth="138.0" text="Producto" />
+                <TableColumn fx:id="precioColumn" prefWidth="146.0" text="Precio" />
+              </columns>
+            </TableView>
+            <Button fx:id="agregarTableView" layoutX="93.0" layoutY="334.0" mnemonicParsing="false" onAction="#agregarTable" text="Agregar" />
+            <Button fx:id="hacerPedido" layoutX="236.0" layoutY="334.0" mnemonicParsing="false" onAction="#realizarPedido" text="Hacer Pedido" />
+            <RadioButton fx:id="RadioPaypal" layoutX="93.0" layoutY="309.0" mnemonicParsing="false" text="Paypal" textFill="WHITE" />
+            <RadioButton fx:id="RadioTarjeta" layoutX="183.0" layoutY="309.0" mnemonicParsing="false" text="Tarjeta Debito" textFill="WHITE" />
+            <Label layoutX="93.0" layoutY="279.0" text="Metodo de Pago" />
          </children>
       </AnchorPane>
    </children>
