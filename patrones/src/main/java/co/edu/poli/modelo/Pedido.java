@@ -3,7 +3,10 @@ package co.edu.poli.modelo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pedido {
+import co.edu.poli.modelo.Visitor.IElemento;
+import co.edu.poli.modelo.Visitor.IVisitor;
+
+public class Pedido implements IElemento {
 
     private Cliente cliente;
     private List<Producto> productos;
@@ -49,10 +52,19 @@ public class Pedido {
         }
         return precio;
     }
+
+    public Producto ultimProducto(){
+        return getProductos().get(getProductos().size()-1);
+    }
     
     @Override
     public String toString() {
         return "Pedido:\n" + cliente + "\n" + productos;
+    }
+
+    @Override
+    public String aceptar(IVisitor visitor) {
+        return visitor.visit(this);
     }
     
 }

@@ -1,6 +1,9 @@
 package co.edu.poli.modelo;
 
-public class Producto {
+import co.edu.poli.modelo.Visitor.IElemento;
+import co.edu.poli.modelo.Visitor.IVisitor;
+
+public class Producto implements IElemento{
     private String descripcion;
     private double precio;
 
@@ -23,6 +26,11 @@ public class Producto {
     @Override
     public String toString() {
         return "Producto [descripcion=" + descripcion + ", precio=" + precio + "]\n";
+    }
+
+    @Override
+    public String aceptar(IVisitor visitor) {
+        return visitor.visit(this);
     }
     
 }

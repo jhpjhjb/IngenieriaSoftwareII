@@ -1,4 +1,6 @@
-package co.edu.poli.modelo;
+package co.edu.poli.modelo.Chain;
+
+import co.edu.poli.modelo.Pedido;
 
 public class ManjeadorPedido extends Manejador{
 

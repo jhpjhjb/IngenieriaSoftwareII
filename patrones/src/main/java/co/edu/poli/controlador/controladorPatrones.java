@@ -7,12 +7,14 @@ import co.edu.poli.modelo.DescuentoContext;
 import co.edu.poli.modelo.DescuentoMetodoPago;
 import co.edu.poli.modelo.DescuentoPorCantidad;
 import co.edu.poli.modelo.DescuentoProductoEspecifico;
-import co.edu.poli.modelo.Manejador;
-import co.edu.poli.modelo.ManejadorCliente;
-import co.edu.poli.modelo.ManejadorProducto;
-import co.edu.poli.modelo.ManjeadorPedido;
 import co.edu.poli.modelo.Pedido;
 import co.edu.poli.modelo.Producto;
+import co.edu.poli.modelo.Chain.Manejador;
+import co.edu.poli.modelo.Chain.ManejadorCliente;
+import co.edu.poli.modelo.Chain.ManejadorProducto;
+import co.edu.poli.modelo.Chain.ManjeadorPedido;
+import co.edu.poli.modelo.Visitor.ConcreteVisitor;
+import co.edu.poli.modelo.Visitor.IVisitor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -50,9 +52,9 @@ public class controladorPatrones {
     @FXML
     private TableView<Producto> tableViewProductos;
     @FXML
-    private Button bttAñadir, bttChain, bttStrategy, bttValidar, bttCambiar;
+    private Button bttAñadir, bttChain, bttStrategy, bttValidar, bttCambiar, bttVisitor,bttUsd,bttState,bttMx,bttEur, bttagregarProductos, bttAgregar2, bttMostrarP, bttMostrarPe;
     @FXML
-    private AnchorPane contenedorChain;
+    private AnchorPane contenedorChain, visitorA,  contenedorProductos;
     @FXML
     private TextField descripcionProducto, precioProducto;
     @FXML
@@ -94,6 +96,12 @@ public class controladorPatrones {
         contenedorSrategy.setVisible(false);
     }
 
+
+    @FXML
+    void clickAgregarP(ActionEvent event) {
+        mostrar = !mostrar;
+        contenedorProductos.setVisible(mostrar);
+    }
     
     @FXML
     void clickChain(ActionEvent event) {
@@ -101,6 +109,35 @@ public class controladorPatrones {
         bttStrategy.setVisible(mostrar);
         contenedorChain.setVisible(!mostrar);
         contenedorSrategy.setVisible(false); 
+        contenedorProductos.setVisible(false);
+        bttVisitor.setVisible(mostrar);
+        bttState.setVisible(mostrar);
+    }
+    @FXML
+    void clickState(ActionEvent event) {
+
+    }
+    @FXML
+    void clickStrategy(ActionEvent event) {
+        mostrar = !mostrar;
+        bttChain.setVisible(mostrar);
+        contenedorSrategy.setVisible(!mostrar);
+        contenedorChain.setVisible(false); 
+        contenedorProductos.setVisible(false);
+        bttVisitor.setVisible(mostrar);
+        bttState.setVisible(mostrar);
+    }
+    @FXML
+    void clickVisitor(ActionEvent event) {
+        mostrar = !mostrar;
+        bttState.setVisible(mostrar);
+        bttStrategy.setVisible(mostrar);
+        bttChain.setVisible(mostrar);
+        contenedorChain.setVisible(false);
+        contenedorSrategy.setVisible(false);
+        visitorA.setVisible(!mostrar);
+        contenedorProductos.setVisible(false);
+
     }
 
     @FXML
@@ -111,13 +148,6 @@ public class controladorPatrones {
     }
 
    
-    @FXML
-    void clickStrategy(ActionEvent event) {
-        mostrar = !mostrar;
-        bttChain.setVisible(mostrar);
-        contenedorSrategy.setVisible(!mostrar);
-        contenedorChain.setVisible(false); 
-    }
 
     @FXML
     void realizarPedido(ActionEvent event) {
@@ -131,24 +161,24 @@ public class controladorPatrones {
         }
         productosParaPedido.clear();
 
-        double descuentoCantidad = 0;
-        double descuentoProducto = 0;
-        double descuentoPago = 0;
-
+    
+        double totalOriginal = pedido.getTotal();
+        double totalConDescuentos = totalOriginal; 
         contextoDescuento.setEstrategia(new DescuentoPorCantidad());
-        descuentoCantidad = contextoDescuento.calcularTotalConDescuento(pedido);
-
+        double descuentoCantidad = contextoDescuento.calcularTotalConDescuento(pedido);
+        totalConDescuentos -= descuentoCantidad;  
         contextoDescuento.setEstrategia(new DescuentoProductoEspecifico());
-        descuentoProducto = contextoDescuento.calcularTotalConDescuento(pedido);
+        double descuentoProducto = contextoDescuento.calcularTotalConDescuento(pedido);
+        totalConDescuentos -= descuentoProducto;  
 
+    
         String metodoPago = grupoPago.getSelectedToggle().getUserData().toString();
         pedido.setMetodoPago(metodoPago);
         contextoDescuento.setEstrategia(new DescuentoMetodoPago());
-        descuentoPago = contextoDescuento.calcularTotalConDescuento(pedido);
-
-        double totalSinDescuento = pedido.getTotal();
-        double totalDescuentos = descuentoCantidad + descuentoProducto + descuentoPago;
-        double totalFinal = totalSinDescuento - totalDescuentos;
+        double descuentoPago = contextoDescuento.calcularTotalConDescuento(pedido);
+        totalConDescuentos -= descuentoPago; 
+        double totalSinDescuento = totalOriginal;
+        double totalFinal = totalConDescuentos;
 
         String resumen = "Pedido Realizado\n" +
                 pedido.toString() +
@@ -180,6 +210,7 @@ public class controladorPatrones {
         } else {
             mostrarAlerta("Rellena todos los campos", AlertType.ERROR);
         }
+        contenedorProductos.setVisible(false);
     }
 
     @FXML
@@ -210,6 +241,77 @@ public class controladorPatrones {
     void agregarTable(ActionEvent event) {
         añadirProductosDesdeTabla(event);
     }
+
+    //Patron Visitor
+    @FXML
+    void clickAgregar2(ActionEvent event) {
+        mostrar = !mostrar;
+        contenedorProductos.setVisible(!mostrar);
+    }
+    @FXML
+    void clickUSD(ActionEvent event) {
+        IVisitor visitor = new ConcreteVisitor(0.00024, "USD");
+        if(bttMostrarP.isDisable()){
+            mostrarAlerta(pedido.aceptar(visitor), AlertType.INFORMATION);
+        }
+        else{
+            Producto ultimProducto = pedido.ultimProducto();
+            mostrarAlerta(ultimProducto.aceptar(visitor), AlertType.INFORMATION);
+        }
+    }
+    
+    @FXML
+    void clickEur(ActionEvent event) {
+        IVisitor visitor = new ConcreteVisitor(0.00021, "EUR");
+        if(bttMostrarP.isDisable()){
+            mostrarAlerta(pedido.aceptar(visitor), AlertType.INFORMATION);
+        }
+        else{
+            Producto ultimProducto = pedido.ultimProducto();
+            mostrarAlerta(ultimProducto.aceptar(visitor), AlertType.INFORMATION);
+        }
+      
+    }
+    @FXML
+    void clickMx(ActionEvent event) {
+         IVisitor visitor = new ConcreteVisitor(0.0046, "MX");
+        if(bttMostrarP.isDisable()){
+            mostrarAlerta(pedido.aceptar(visitor), AlertType.INFORMATION);
+        }
+        else{
+            Producto ultimProducto = pedido.ultimProducto();
+            mostrarAlerta(ultimProducto.aceptar(visitor), AlertType.INFORMATION);
+        }
+    }
+
+    @FXML
+    void clickPedido(ActionEvent event) {
+        mostrar = !mostrar;
+        bttMostrarP.setDisable(!mostrar);
+        bttAgregar2.setDisable(!mostrar);
+        if(bttAgregar2.isDisable()){
+            mostrarAlerta(pedido.toString(),AlertType.INFORMATION);
+        }
+    }
+    @FXML
+    void clickMostrar(ActionEvent event) {
+        mostrar = !mostrar;
+        bttMostrarPe.setDisable(!mostrar);
+        if(!pedido.getProductos().isEmpty() && bttMostrarPe.isDisable()){
+            Producto ultiProducto = pedido.ultimProducto();
+            mostrarAlerta(ultiProducto.toString(), AlertType.INFORMATION);
+        }
+        else if (pedido.getProductos().isEmpty() && bttMostrarPe.isDisable()){
+            mostrarAlerta("Tu pedido Aun esta Vacio\nAgrega Productos :)\n"+ pedido.toString(), AlertType.ERROR);
+        }
+    }
+
+ 
+  
+
+
+
+
 
     private void mostrarAlerta(String mensaje, AlertType tipo) {
         Alert alerta = new Alert(tipo);
