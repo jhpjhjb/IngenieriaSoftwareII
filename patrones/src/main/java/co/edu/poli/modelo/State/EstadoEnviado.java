@@ -14,7 +14,7 @@ public class EstadoEnviado implements EstadoPedido{
 
     @Override
     public String enviar(PedidoContext pedido) {
-        pedido.setEstado(new EstadoCreado());
+        pedido.setEstado(new EstadoEntregado());
         return "Enviando tu pedido a Wilson... \nPedido entregado exitosamente...";
     }
 
