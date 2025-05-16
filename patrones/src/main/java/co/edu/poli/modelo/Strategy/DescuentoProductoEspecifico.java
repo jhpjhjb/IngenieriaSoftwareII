@@ -1,4 +1,7 @@
-package co.edu.poli.modelo;
+package co.edu.poli.modelo.Strategy;
+
+import co.edu.poli.modelo.Pedido;
+import co.edu.poli.modelo.Producto;
 
 public class DescuentoProductoEspecifico implements DescuentoStrategy {
 

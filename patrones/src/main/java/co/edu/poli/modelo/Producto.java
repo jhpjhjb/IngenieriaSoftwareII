@@ -20,12 +20,9 @@ public class Producto implements IElemento{
         return precio;
     }
 
-    
-
-    
     @Override
     public String toString() {
-        return "Producto [descripcion=" + descripcion + ", precio=" + precio + "]\n";
+        return "Producto \nDescripcion: " + descripcion + "\nPrecio: " + precio + "\n";
     }
 
     @Override

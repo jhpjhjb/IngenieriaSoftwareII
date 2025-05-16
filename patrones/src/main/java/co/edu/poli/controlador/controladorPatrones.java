@@ -1,18 +1,19 @@
 package co.edu.poli.controlador;
 
-import java.util.function.Predicate;
-
 import co.edu.poli.modelo.Cliente;
-import co.edu.poli.modelo.DescuentoContext;
-import co.edu.poli.modelo.DescuentoMetodoPago;
-import co.edu.poli.modelo.DescuentoPorCantidad;
-import co.edu.poli.modelo.DescuentoProductoEspecifico;
 import co.edu.poli.modelo.Pedido;
 import co.edu.poli.modelo.Producto;
 import co.edu.poli.modelo.Chain.Manejador;
 import co.edu.poli.modelo.Chain.ManejadorCliente;
 import co.edu.poli.modelo.Chain.ManejadorProducto;
 import co.edu.poli.modelo.Chain.ManjeadorPedido;
+import co.edu.poli.modelo.State.EstadoCancelado;
+import co.edu.poli.modelo.State.EstadoCreado;
+import co.edu.poli.modelo.State.PedidoContext;
+import co.edu.poli.modelo.Strategy.DescuentoContext;
+import co.edu.poli.modelo.Strategy.DescuentoMetodoPago;
+import co.edu.poli.modelo.Strategy.DescuentoPorCantidad;
+import co.edu.poli.modelo.Strategy.DescuentoProductoEspecifico;
 import co.edu.poli.modelo.Visitor.ConcreteVisitor;
 import co.edu.poli.modelo.Visitor.IVisitor;
 import javafx.collections.FXCollections;
@@ -32,10 +33,13 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
+
+
 public class controladorPatrones {
     private boolean mostrar = true;
     private ToggleGroup grupo = new ToggleGroup();
-    private ToggleGroup grupoPago = new ToggleGroup();
+    private ToggleGroup grupoPago = new ToggleGroup();  
+    private ToggleGroup grupoPago2 = new ToggleGroup();  
     private Cliente cliente = new Cliente("Andres", false);
     private Pedido pedido = new Pedido(cliente);
     private Producto producto1 = new Producto("Zapatos Nike", 200.0);
@@ -44,7 +48,33 @@ public class controladorPatrones {
     private ObservableList<Producto> productosParaPedido = FXCollections.observableArrayList();
     private DescuentoContext contextoDescuento = new DescuentoContext(new DescuentoPorCantidad());
     private ObservableList<Producto> productosDisponibles = FXCollections.observableArrayList();
+    private PedidoContext context = new PedidoContext();
+    
 
+    @FXML
+    private Button bttCancelarState;
+    @FXML
+    private AnchorPane contenedorState;
+    @FXML
+    private TableView<Producto> tableViewProductos2;
+    @FXML
+    private TableColumn<Producto, String> descripcionColumn2;
+    @FXML
+    private TableColumn<Producto, String> precioColumn2;
+    @FXML
+    private Button bttAgregarState;
+    @FXML
+    private Button bttHacerPedidoState;
+    @FXML
+    private RadioButton RadioPaypal2;
+    @FXML
+    private RadioButton RadioTarjeta2;
+    @FXML
+    private Button bttPagarState;
+    @FXML
+    private Button bttEnviarState;
+    @FXML
+    private Button bttRevisarPedido;
     @FXML
     private TableColumn<Producto, String> descripcionColumn;
     @FXML
@@ -78,8 +108,12 @@ public class controladorPatrones {
         tableViewProductos.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         productosDisponibles.addAll(producto1, producto2, producto3);
         tableViewProductos.setItems(productosDisponibles);
-
+        descripcionColumn2.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+        precioColumn2.setCellValueFactory(new PropertyValueFactory<>("precio"));
+        tableViewProductos2.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableViewProductos2.setItems(productosDisponibles);
         
+
         radioActivo.setToggleGroup(grupo);
         radioInactivo.setToggleGroup(grupo);
         radioActivo.setUserData(true);
@@ -90,10 +124,16 @@ public class controladorPatrones {
         RadioTarjeta.setToggleGroup(grupoPago);
         RadioPaypal.setUserData("PayPal");
         RadioTarjeta.setUserData("Tarjeta Debito");
+        RadioPaypal2.setToggleGroup(grupoPago2);
+        RadioTarjeta2.setToggleGroup(grupoPago2);
+        RadioPaypal2.setUserData("PayPal");
+        RadioTarjeta2.setUserData("Tarjeta Debito");
+
 
        
         contenedorChain.setVisible(false);
         contenedorSrategy.setVisible(false);
+        contenedorState.setVisible(false);
     }
 
 
@@ -115,8 +155,17 @@ public class controladorPatrones {
     }
     @FXML
     void clickState(ActionEvent event) {
-
+        mostrar = !mostrar;
+        bttStrategy.setVisible(mostrar);
+        bttChain.setVisible(mostrar);
+        bttVisitor.setVisible(mostrar);
+        contenedorState.setVisible(!mostrar);
+        contenedorChain.setVisible(false);
+        contenedorSrategy.setVisible(false);
+        visitorA.setVisible(false);
+        contenedorProductos.setVisible(false);
     }
+
     @FXML
     void clickStrategy(ActionEvent event) {
         mostrar = !mostrar;
@@ -226,6 +275,12 @@ public class controladorPatrones {
 
     @FXML
     void añadirProductosDesdeTabla(ActionEvent event) {
+
+        if (!(context.getEstado() instanceof EstadoCreado)) {
+            mostrarAlerta("No puedes agregar productos en este estado del pedido.", AlertType.ERROR);
+            return;
+        }
+
         ObservableList<Producto> productosSeleccionados = tableViewProductos.getSelectionModel().getSelectedItems();
 
         if (!productosSeleccionados.isEmpty()) {
@@ -306,12 +361,95 @@ public class controladorPatrones {
         }
     }
 
- 
-  
+    @FXML
+    void agregarProductoState(ActionEvent event) {
 
+        if (!(context.getEstado() instanceof EstadoCreado || context.getEstado() instanceof EstadoCancelado)) {
+            mostrarAlerta(context.crearPedido(), AlertType.ERROR);
+            return;
+        }
 
+        String nombreCliente = pedido.getCliente().getNombre();
 
+        ObservableList<Producto> productosSeleccionados = tableViewProductos2.getSelectionModel().getSelectedItems();
 
+        if (!productosSeleccionados.isEmpty()) {
+            Producto productoSeleccionado = productosSeleccionados.get(0);
+            productosParaPedido.add(productoSeleccionado);
+            mostrarAlerta("Pedido de: "+nombreCliente+"\nProducto añadido al pedido: " + productoSeleccionado.getDescripcion(), AlertType.INFORMATION);
+        } else {
+            mostrarAlerta("No hay productos seleccionados", AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    void realizarPedidoState(ActionEvent event) {
+
+        if (!(context.getEstado() instanceof EstadoCreado || context.getEstado() instanceof EstadoCancelado)) {
+            mostrarAlerta(context.crearPedido(), AlertType.ERROR);
+            return; 
+        }
+
+        if (productosParaPedido.isEmpty()) {
+            mostrarAlerta("Error: Debes seleccionar al menos un producto para realizar el pedido.", Alert.AlertType.ERROR);
+            return; 
+        }
+
+        for (Producto producto : productosParaPedido) {
+            pedido.agregarProductos(producto);
+        }
+
+        productosParaPedido.clear();
+        String resultado = context.crearPedido();
+        mostrarAlerta(resultado, Alert.AlertType.INFORMATION);
+    }
+
+    @FXML
+    void pagarPedidoState(ActionEvent event) {
+        if (grupoPago2.getSelectedToggle() == null) {
+            mostrarAlerta("Debe seleccionar un método de pago", AlertType.ERROR);
+            return;
+        }
+
+        String resultado = context.pagar();
+        mostrarAlerta(resultado, Alert.AlertType.INFORMATION);
+    }
+
+    @FXML
+    void enviarPedido(ActionEvent event) {
+        String resultado = context.enviar();
+        mostrarAlerta(resultado, Alert.AlertType.INFORMATION);
+    }
+
+    @FXML
+    void revisarPedidoState(ActionEvent event) {
+
+        if (!(context.getEstado() instanceof EstadoCreado || context.getEstado() instanceof EstadoCancelado)) {
+            mostrarAlerta("No se puede revisar el pedido. El pedido está en proceso.", AlertType.ERROR);
+            return;
+        }
+
+        StringBuilder mensaje = new StringBuilder();
+        double total = 0.0;
+
+        for (Producto p : productosParaPedido) {
+            mensaje.append(p.toString()).append("\n");
+            total += p.getPrecio(); // Aquí vas sumando los precios
+        }
+
+        if (mensaje.length() == 0) {
+            mostrarAlerta("Aún no hay productos en el pedido.", Alert.AlertType.INFORMATION);
+        } else {
+            mensaje.append("\nTotal: $").append(String.format("%.2f", total));
+            mostrarAlerta("Hola " + pedido.getCliente().getNombre() + ", estos son tus productos:\n\n" + mensaje.toString(), Alert.AlertType.INFORMATION);
+        }
+    }
+    
+    @FXML
+    void cancelarState(ActionEvent event) {
+        String resultado = context.cancelar();
+        mostrarAlerta(resultado, Alert.AlertType.INFORMATION);
+    }
 
     private void mostrarAlerta(String mensaje, AlertType tipo) {
         Alert alerta = new Alert(tipo);
